@@ -5,17 +5,18 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  services.tlp.enable = true;
   networking.hostName = "thanawat"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable =
+    true; # Enables wireless support via wpa_supplicant.
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -27,53 +28,64 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  programs.adb.enable = true;
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-   console = {
-     font = "Lat2-Terminus16";
-     keyMap = "us";
-   };
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
 
   # Set your time zone.
-   time.timeZone = "America/Los_Angeles";
+  time.timeZone = "America/Los_Angeles";
 
-   nixpkgs.config = {
-  # Allow proprietary packages
-  allowUnfree = true;
+  nixpkgs.config = {
+    # Allow proprietary packages
+    allowUnfree = true;
 
-  # Create an alias for the unstable channel
+    # Create an alias for the unstable channel
 
-  # packageOverrides = pkgs: {
-  # unstable = import <nixos-unstable> { # pass the nixpkgs config to the unstable alias # to ensure `allowUnfree = true;` is propagated:
-  # config = config.nixpkgs.config;
-  # };
-  # };
+    # packageOverrides = pkgs: {
+    # unstable = import <nixos-unstable> { # pass the nixpkgs config to the unstable alias # to ensure `allowUnfree = true;` is propagated:
+    # config = config.nixpkgs.config;
+    # };
+    # };
   };
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball
+      "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz"))
+  ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    nodePackages.javascript-typescript-langserver
-    wget 
+    # for typescript-coding support?
+    nodePackages.typescript-language-server
+    nodePackages.typescript
+    wget
     neovim
-    emacs
     mu
     nixfmt
     brave
     firefox
     alacritty
+    # Emacs and related programs
+    emacsUnstable
     fish
     git
     sqlite
     ripgrep
     fd
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+
     direnv
     xmobar
     pass
     gnupg
     mpv
-    ispell
     htop
+    powertop
     pulsemixer
     brightnessctl
     dunst
@@ -81,6 +93,7 @@
     libnotify
     lutris
     gnome3.adwaita-icon-theme
+    cmake
   ];
   programs.steam.enable = true;
   programs.gnupg.agent = {
@@ -103,6 +116,14 @@
   };
   location.provider = "geoclue2";
   # services.picom.enable = true;
+
+  # Enable virtualbox
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "thanawat" ];
+
+  # flathub(for flatpacks)
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -126,32 +147,37 @@
   services.printing.enable = true;
 
   # Enable sound.
-   sound.enable = true;
-   hardware.bluetooth.enable = true;
-   hardware.pulseaudio = {
-     enable = true;
-     package = pkgs.pulseaudioFull;
-   };
+  sound.enable = true;
+  hardware.bluetooth.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
 
   # Enable the X11 windowing system.
-   services.xserver.enable = true;
-   services.xserver.layout = "us,th";
-   services.xserver.xkbOptions = "grp:ctrls_toggle,ctrl:nocaps";
+  services.xserver.enable = true;
+  services.xserver.layout = "us,th";
+  services.xserver.xkbOptions = "grp:ctrls_toggle,ctrl:nocaps";
 
   # Enable touchpad support.
-   services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Enable the KDE Desktop Environment.
-   # services.xserver.displayManager.lightdm.enable = true;
-   services.xserver.windowManager.xmonad.enable = true;
-   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+  # services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.windowManager.xmonad.enable = true;
+  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.thanawat = {
-     isNormalUser = true;
-     extraGroups = [ "networkmanager" "wheel" "audio"]; # Enable ‘sudo’ for the user.
-     shell = pkgs.fish;
-   };
+  users.users.thanawat = {
+    isNormalUser = true;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "adbusers"
+    ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.fish;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
