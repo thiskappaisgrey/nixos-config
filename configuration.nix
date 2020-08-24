@@ -72,6 +72,8 @@
     emacsUnstable
     fish
     git
+    syncthing
+    syncthing-cli
     sqlite
     ripgrep
     fd
