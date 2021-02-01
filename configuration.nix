@@ -2,8 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
+{ config, lib, pkgs, ... }:
+with lib;
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -29,6 +29,17 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   programs.adb.enable = true;
+
+  programs.slock.enable = true;
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      zoom = {
+        executable = "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
+        profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
+      };
+    };
+  };
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -54,16 +65,28 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball
       "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz"))
+
+    (self: super: {
+      steam-run = (super.steam.override {
+        extraLibraries = pkgs:
+          with pkgs; [
+            libxkbcommon
+            mesa
+            wayland
+            zlib
+          ];
+      }).run;
+    })
   ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # for typescript-coding support?
-    nodePackages.typescript-language-server
-    nodePackages.typescript
     wget
+    zip
+    unzip
     neovim
     mu
+    isync
     nixfmt
     brave
     firefox
@@ -75,11 +98,13 @@
     syncthing
     syncthing-cli
     sqlite
+    wordnet
     ripgrep
     fd
     aspell
     aspellDicts.en
     aspellDicts.en-computers
+    gnutls
 
     direnv
     xmobar
@@ -91,11 +116,39 @@
     pulsemixer
     brightnessctl
     dunst
-    picom
     libnotify
     lutris
     gnome3.adwaita-icon-theme
     cmake
+
+    spotify
+    #diskonaut
+    steam-run
+    # Latex and Minted
+    (texlive.combine {
+      # Example of additional packages, probably unnecessary
+    inherit (texlive) scheme-full minted;
+    })
+    python38Packages.pygments
+
+    playerctl
+    #shortwave
+
+    gnuplot
+
+    hardinfo
+    hwinfo
+    lshw
+
+    trayer
+    linuxPackages.acpi_call
+
+    graphviz
+    tldr
+
+    # For typescript language server
+    nodePackages.typescript-language-server
+    nodePackages.typescript
   ];
   programs.steam.enable = true;
   programs.gnupg.agent = {
@@ -109,7 +162,7 @@
     brightness = {
       # Note the string values below.
       day = "1";
-      night = "1";
+      night = "0.5";
     };
     temperature = {
       day = 5500;
@@ -117,11 +170,20 @@
     };
   };
   location.provider = "geoclue2";
-  # services.picom.enable = true;
+  services.picom = {
+    enable = true;
+    fade = true;
+    inactiveOpacity = 0.9;
+    shadow = false;
+    fadeDelta = 4;
+    vSync = true;
+    backend = "glx";
+  };
 
   # Enable virtualbox
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "thanawat" ];
+  # virtualisation.virtualbox.host.enable = true; I don't need this right now!
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+  # users.extraGroups.vboxusers.members = [ "thanawat" ];
 
   # flathub(for flatpacks)
   services.flatpak.enable = true;
@@ -146,11 +208,23 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing ={
+    enable = true;
+    drivers = [
+      pkgs.hplip
+    ];
+  };
 
+  hardware.sane = {
+    enable = true;
+    extraBackends = [ pkgs.hplipWithPlugin ];
+  };
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
   # Enable sound.
   sound.enable = true;
   hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   hardware.pulseaudio = {
     enable = true;
     package = pkgs.pulseaudioFull;
@@ -164,11 +238,20 @@
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "thanawat";
+  services.xserver.displayManager.defaultSession = "none+xmonad";
+  # services.xserver.displayManager.startx.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
 
+  services.syncthing = {
+    enable = true;
+    user = "thanawat";
+    dataDir = "/home/thanawat";
+    configDir = "/home/thanawat/.config/syncthing";
+  };
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.thanawat = {
     isNormalUser = true;
@@ -177,10 +260,18 @@
       "wheel"
       "audio"
       "adbusers"
+      "lp"
+      "scannner"
     ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
   };
-
+  nix.trustedUsers = [ "root" "thanawat" ];
+  # Auto Upgrades
+  system.autoUpgrade = {
+    enable = false; # Don't enable this for now b/c it bit me too many times!!
+    dates = "2:00"; # Gotta figure out what times I could do this
+    allowReboot = false;
+  };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
