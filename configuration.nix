@@ -3,8 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, lib, pkgs, ... }:
-with lib;
-{
+with lib; {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -12,8 +11,22 @@ with lib;
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  services.upower.enable = true;
+  # services.tlp.enable = true;
+  services.tlp = {
+      enable = true;
+    };
 
-  services.tlp.enable = true;
+  services.udev.extraRules = lib.mkMerge [
+    # autosuspend USB devices
+    ''ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"''
+    # autosuspend PCI devices
+    ''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
+    # disable Ethernet Wake-on-LAN
+    ''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
+  ];
+
+  services.auto-cpufreq.enable = true; # power saving
   networking.hostName = "thanawat"; # Define your hostname.
   networking.networkmanager.enable =
     true; # Enables wireless support via wpa_supplicant.
@@ -68,16 +81,16 @@ with lib;
 
     (self: super: {
       steam-run = (super.steam.override {
-        extraLibraries = pkgs:
-          with pkgs; [
-            libxkbcommon
-            mesa
-            wayland
-            zlib
-          ];
+        extraLibraries = pkgs: with pkgs; [ libxkbcommon mesa wayland zlib ];
       }).run;
+      mmorph = self.callHackage "mmorph" "1.1.3" { };
     })
   ];
+  nix.binaryCaches =
+    [ "https://cache.nixos.org/" "https://nixcache.reflex-frp.org" ];
+  nix.binaryCachePublicKeys =
+    [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -127,7 +140,7 @@ with lib;
     # Latex and Minted
     (texlive.combine {
       # Example of additional packages, probably unnecessary
-    inherit (texlive) scheme-full minted;
+      inherit (texlive) scheme-full minted;
     })
     python38Packages.pygments
 
@@ -149,6 +162,9 @@ with lib;
     # For typescript language server
     nodePackages.typescript-language-server
     nodePackages.typescript
+
+    freetube
+    anki
   ];
   programs.steam.enable = true;
   programs.gnupg.agent = {
@@ -157,19 +173,16 @@ with lib;
   };
   # Enable https://github.com/target/lorri for easier nix-shell integration
   services.lorri.enable = true;
-  services.redshift = {
+  services.fwupd.enable = true;
+  services.clight = {
     enable = true;
-    brightness = {
-      # Note the string values below.
-      day = "1";
-      night = "0.5";
-    };
-    temperature = {
-      day = 5500;
-      night = 3700;
+    settings = {
+      keyboard = {
+        disabled = true;
+      };
     };
   };
-  location.provider = "geoclue2";
+ location.provider = "geoclue2";
   services.picom = {
     enable = true;
     fade = true;
@@ -180,13 +193,16 @@ with lib;
     backend = "glx";
   };
 
-  # Enable virtualbox
+  ## VIRTUALIZATION ##
+  ## Virtual Box
   # virtualisation.virtualbox.host.enable = true; I don't need this right now!
   # virtualisation.virtualbox.host.enableExtensionPack = true;
+  ## Libvirtd - QEMU
+  virtualisation.libvirtd.enable = true;
   # users.extraGroups.vboxusers.members = [ "thanawat" ];
 
   # flathub(for flatpacks)
-  services.flatpak.enable = true;
+  #services.flatpak.enable = true;
   xdg.portal.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -208,11 +224,9 @@ with lib;
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   # Enable CUPS to print documents.
-  services.printing ={
+  services.printing = {
     enable = true;
-    drivers = [
-      pkgs.hplip
-    ];
+    drivers = [ pkgs.hplip ];
   };
 
   hardware.sane = {
