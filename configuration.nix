@@ -256,13 +256,6 @@ with lib; {
   services.xserver.enable = true;
   services.xserver.layout = "us,th";
   services.xserver.xkbOptions = "grp:ctrls_toggle,ctrl:nocaps";
-  services.xserver.extraLayouts = {
-    workman = {
-    description = "The workman layout";
-    languages = [ "eng" ];
-    symbolsFile = ./xorg/workman;
-    };
-  };
 
 
   # Enable touchpad support.
