@@ -14,7 +14,7 @@ layout, so do be patient if you too want to add a new keyboard layout to your
 nixos config.
 
 This config contains code from: https://github.com/workman-layout/Workman (the
-[./xorg](folder)).
+[xorg folder](./xorg)).
 The Workman Keyboard Layout is created by OJ Bucao, learn more here:
 https://workmanlayout.org
 
