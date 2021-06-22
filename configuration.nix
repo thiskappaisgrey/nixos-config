@@ -24,6 +24,8 @@ with lib; {
     ''ACTION=="add", SUBSYSTEM=="pci", TEST=="power/control", ATTR{power/control}="auto"''
     # disable Ethernet Wake-on-LAN
     ''ACTION=="add", SUBSYSTEM=="net", NAME=="enp*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol d"''
+    # KMonad user access to /dev/uinput
+    ''KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput" ''
   ];
 
   services.auto-cpufreq.enable = true; # power saving
@@ -91,6 +93,8 @@ with lib; {
   nix.binaryCachePublicKeys =
     [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
 
+  # arbtt - time tracking
+  services.arbtt.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -102,6 +106,7 @@ with lib; {
     isync
     nixfmt
     brave
+    nyxt
     firefox
     alacritty
     # Emacs and related programs
@@ -133,7 +138,7 @@ with lib; {
     lutris
     gnome3.adwaita-icon-theme
     cmake
-
+    haskellPackages.arbtt
     spotify
     #diskonaut
     steam-run
@@ -143,6 +148,7 @@ with lib; {
       inherit (texlive) scheme-full minted;
     })
     python38Packages.pygments
+    caffeine-ng
 
     playerctl
     #shortwave
@@ -165,7 +171,9 @@ with lib; {
 
     freetube
     anki
-  ];
+    lm_sensors
+    (import ./packages/kmonad.nix)
+  ] ++ (import ./programs/programming.nix  pkgs);
   programs.steam.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -252,11 +260,10 @@ with lib; {
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
 
-  services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "thanawat";
   services.xserver.displayManager.defaultSession = "none+xmonad";
-  # services.xserver.displayManager.startx.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
 
@@ -276,6 +283,8 @@ with lib; {
       "adbusers"
       "lp"
       "scannner"
+      "input"
+      "uinput"
     ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
   };
@@ -295,4 +304,3 @@ with lib; {
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-
