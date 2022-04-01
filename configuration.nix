@@ -14,9 +14,39 @@ with lib; {
   boot.loader.efi.canTouchEfiVariables = true;
   services.upower.enable = true;
   # services.tlp.enable = true;
-  services.tlp = { enable = true; };
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0=75;
+      STOP_CHARGE_THRESH_BAT0=80;
+
+      CPU_SCALING_GOVERNOR_ON_AC="schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT="schedutil";
+
+      CPU_SCALING_MIN_FREQ_ON_AC=800000;
+      CPU_SCALING_MAX_FREQ_ON_AC=3500000;
+      CPU_SCALING_MIN_FREQ_ON_BAT=800000;
+      CPU_SCALING_MAX_FREQ_ON_BAT=2300000;
+
+      # Enable audio power saving for Intel HDA, AC97 devices (timeout in secs).
+      # A value of 0 disables, >=1 enables power saving (recommended: 1).
+      # Default: 0 (AC), 1 (BAT)
+      SOUND_POWER_SAVE_ON_AC=0;
+      SOUND_POWER_SAVE_ON_BAT=1;
+
+      # Runtime Power Management for PCI(e) bus devices: on=disable, auto=enable.
+      # Default: on (AC), auto (BAT)
+      RUNTIME_PM_ON_AC="on";
+      RUNTIME_PM_ON_BAT="auto";
+
+      # Battery feature drivers: 0=disable, 1=enable
+      # Default: 1 (all)
+      NATACPI_ENABLE=1;
+      TPACPI_ENABLE=1;
+      TPSMAPI_ENABLE=1;
+    };
+  };
   powerManagement.powertop.enable = true;
-  nix.autoOptimiseStore = true;
 
   services.udev.extraRules = lib.mkMerge [
     # autosuspend USB devices
@@ -61,7 +91,20 @@ with lib; {
     enable = true;
     wrappedBinaries = {
       zoom = {
-        executable = "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
+        executable = let
+          # pkgs-old = import  (builtins.fetchGit {
+          #   # Descriptive name to make the store path easier to identify
+          #   name = "my-old-revision";
+          #   url = "https://github.com/NixOS/nixpkgs/";
+          #   ref = "refs/heads/nixpkgs-unstable";
+          #   rev = "5e15d5da4abb74f0dd76967044735c70e94c5af1";
+          # }) { };
+          pkgs-old = import (builtins.fetchTarball {
+            url =
+              "https://github.com/NixOS/nixpkgs/archive/9986226d5182c368b7be1db1ab2f7488508b5a87.tar.gz";
+          }) { config.allowUnfree = true; };
+
+        in "${lib.getBin pkgs-old.zoom-us}/bin/zoom-us";
         profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
       };
     };
@@ -104,6 +147,9 @@ with lib; {
           ];
       }).run;
       mmorph = self.callHackage "mmorph" "1.1.3" { };
+      xmonad = self.xmonad_0_17_0;
+      xmonad-contrib = self.xmonad_0_17_0;
+      xmonad-extras = self.xmonad-extras_0_17_0;
     })
   ];
   nix = {
@@ -111,16 +157,19 @@ with lib; {
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    binaryCaches = [
+    settings.substituters = [
       "https://cache.nixos.org/"
       "https://nixcache.reflex-frp.org"
       "https://hydra.iohk.io"
     ];
-    binaryCachePublicKeys = [
+    settings.trusted-public-keys = [
       "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
     ];
+    settings.auto-optimise-store = true;
   };
+  hardware.opengl.enable =  true;
+
   # arbtt - time tracking
   services.arbtt.enable = true;
   # List packages installed in system profile. To search, run:
@@ -164,7 +213,7 @@ with lib; {
       # Latex and Minted
       (texlive.combine {
         # Example of additional packages, probably unnecessary
-        inherit (texlive) scheme-full minted;
+        inherit (texlive) scheme-full minted fancyhdr;
       })
       python38Packages.pygments
 
@@ -192,10 +241,10 @@ with lib; {
   services.lorri.enable = true;
   services.fwupd.enable = true;
   services.autorandr.enable = true;
-  services.clight = {
-    enable = true;
-    settings = { keyboard = { disabled = true; }; };
-  };
+  # services.clight = {
+  #   enable = true;
+  #   settings = { keyboard = { disabled = true; }; };
+  # };
   location.provider = "geoclue2";
   # services.picom = {
   #   enable = true;
@@ -214,7 +263,10 @@ with lib; {
   ## Libvirtd - QEMU
   # virtualisation.libvirtd.enable = true;
 
-  xdg.portal.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -294,7 +346,7 @@ with lib; {
   services.xserver.displayManager.autoLogin.user = "thanawat";
   services.xserver.displayManager.defaultSession = "none+xmonad";
   services.xserver.displayManager.lightdm.enable = true;
-# services.xserver.displayManager.startx.enable = true;
+  # services.xserver.displayManager.startx.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
   services.xserver.digimend.enable = true;
@@ -329,7 +381,7 @@ with lib; {
     ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
   };
-  nix.trustedUsers = [ "root" "thanawat" ];
+  nix.settings.trusted-users = [ "root" "thanawat" ];
   # Auto Upgrades
   system.autoUpgrade = {
     enable = false; # Don't enable this for now b/c it bit me too many times!!
