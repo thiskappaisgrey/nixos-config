@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./emacs ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -18,8 +19,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  # home.stateVersion = "21.11";
-  programs.emacs = { enable = true; };
+  # programs.emacs = { enable = true; };
   # nixpkgs.overlays = [
   #   (self: super: {
   #     airshipper = super.pkgs.callPackage ./airshipper.nix {};
