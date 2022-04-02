@@ -1,15 +1,21 @@
 { config, lib, pkgs, ... }:
-let
+/*let
   myEmacs = pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacsGcc;
-    config = ./init.el;
+    config = ./config.org;
     alwaysEnsure = true;
     alwaysTangle = true;
+
+    override = epkgs: epkgs // {
+    	restart-emacs = epkgs.melpaPackages.restart-emacs.overrideAttrs(old: {
+          patches = [ ./restart-emacs.patch ];
+        });
+    };
   };
-in
+in*/
 {
   programs.emacs =  {
     enable =  true;
-    package = myEmacs;
+    package =  pkgs.emacsGcc;
   };
 }
