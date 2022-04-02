@@ -4,8 +4,8 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     nixos-hardware.url =  "github:NixOS/nixos-hardware/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }:
@@ -33,7 +33,10 @@
       };
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         # Specify the path to your home configuration here
-        configuration = import ./home/home.nix { pkgs = pkgs; config = {}; };
+        #
+        # Not sure how I would get around having to pass down pkgs at every level here to apply overlays and such
+        configuration = import ./home/home.nix;
+        pkgs = pkgs;
         inherit system username;
         homeDirectory = "/home/${username}";
         stateVersion = "22.05";

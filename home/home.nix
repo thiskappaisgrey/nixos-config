@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  # pass down pkgs to use nix-flakes pkgs.. not sure what the default pkgs use tbh
-  imports = [ (import ./emacs.nix { config = config; pkgs = pkgs; }) ];
+  imports = [ ./emacs ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
