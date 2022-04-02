@@ -5,6 +5,7 @@
     home-manager.url = "github:nix-community/home-manager/master";
     nixos-hardware.url =  "github:NixOS/nixos-hardware/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }:
@@ -12,7 +13,10 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config =  { allowUnfree = true; };
+        config =  {
+          allowUnfree = true;
+        };
+        overlays = [ (import self.inputs.emacs-overlay) ];
       };
       lib = nixpkgs.lib;
       username =  "thanawat";

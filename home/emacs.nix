@@ -1,8 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config,  pkgs, ... }:
 
 {
-  imports = {};
-  options = {};
-  config =  { programs.emacs =  { enable =  true; }; };
+  programs.emacs =  {
+    enable =  true;
+    package = pkgs.emacsGcc;
+  };
+
 
 }
