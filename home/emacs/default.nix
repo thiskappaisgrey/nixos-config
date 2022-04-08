@@ -16,6 +16,6 @@ in*/
 {
   programs.emacs =  {
     enable =  true;
-    package =  pkgs.emacsGcc;
+    package = (pkgs.emacsGit.override { nativeComp = true; }); #pkgs.emacsGcc; # For latest emacs git:    
   };
 }

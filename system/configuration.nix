@@ -16,8 +16,8 @@ with lib; {
   services.tlp = {
     enable = true;
     settings = {
-      START_CHARGE_THRESH_BAT0=75;
-      STOP_CHARGE_THRESH_BAT0=80;
+      # START_CHARGE_THRESH_BAT0=75;
+      # STOP_CHARGE_THRESH_BAT0=80;
 
       CPU_SCALING_GOVERNOR_ON_AC="schedutil";
       CPU_SCALING_GOVERNOR_ON_BAT="schedutil";
@@ -66,7 +66,7 @@ with lib; {
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", TAG+="uaccess"''
 
   ];
-
+  services.udev.packages = [ pkgs.android-udev-rules ];
   services.auto-cpufreq.enable = true; # power saving
   networking.hostName = "thanawat"; # Define your hostname.
   networking.networkmanager.enable =

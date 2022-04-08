@@ -40,6 +40,8 @@
     experimentalBackends = true;
     fadeDelta = 5;
   };
+  services.keybase.enable = true;
+  services.kbfs.enable = true;
   # TODO manage doom emacs using home manager too?????
   home.packages = with pkgs; [
     akira-unstable
@@ -117,6 +119,9 @@
     screenkey
     pulsemixer
     pulseaudio
+
+    keybase
+    keybase-gui
 
   ];
 
