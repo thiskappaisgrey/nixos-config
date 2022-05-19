@@ -86,29 +86,29 @@ with lib; {
   programs.adb.enable = true;
 
   programs.slock.enable = true;
-  # programs.firejail = {
-  #   enable = true;
-  #   wrappedBinaries = {
-  #     zoom = {
-  #       executable = let
-  #         # pkgs-old = import  (builtins.fetchGit {
-  #         #   # Descriptive name to make the store path easier to identify
-  #         #   name = "my-old-revision";
-  #         #   url = "https://github.com/NixOS/nixpkgs/";
-  #         #   ref = "refs/heads/nixpkgs-unstable";
-  #         #   rev = "5e15d5da4abb74f0dd76967044735c70e94c5af1";
-  #         # }) { };
-  #         pkgs-old = import (builtins.fetchTarball {
-  #           url =
-  #             "https://github.com/NixOS/nixpkgs/archive/9986226d5182c368b7be1db1ab2f7488508b5a87.tar.gz";
-  #           sha256 =  "1b2palj1q8q6jdba7qwxgkiz3fab9c57a4jxjn1sar6qifamlgq7";
-  #         }) { config.allowUnfree = true; };
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      zoom = {
+        executable = let
+          # pkgs-old = import  (builtins.fetchGit {
+          #   # Descriptive name to make the store path easier to identify
+          #   name = "my-old-revision";
+          #   url = "https://github.com/NixOS/nixpkgs/";
+          #   ref = "refs/heads/nixpkgs-unstable";
+          #   rev = "5e15d5da4abb74f0dd76967044735c70e94c5af1";
+          # }) { };
+          # pkgs-old = import (builtins.fetchTarball {
+          #   url =
+          #     "https://github.com/NixOS/nixpkgs/archive/9986226d5182c368b7be1db1ab2f7488508b5a87.tar.gz";
+          #   sha256 =  "1b2palj1q8q6jdba7qwxgkiz3fab9c57a4jxjn1sar6qifamlgq7";
+          # }) { config.allowUnfree = true; };
 
-  #       in "${lib.getBin pkgs-old.zoom-us}/bin/zoom-us";
-  #       profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
-  #     };
-  #   };
-  # };
+        in "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
+        profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
+      };
+    };
+  };
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -145,10 +145,11 @@ with lib; {
       }).run;
       mmorph = self.callHackage "mmorph" "1.1.3" { };
       xmonad = self.xmonad_0_17_0;
-      xmonad-contrib = self.xmonad_0_17_0;
+      xmonad-contrib = self.xmonad-contrib_0_17_0;
       xmonad-extras = self.xmonad-extras_0_17_0;
     })
   ];
+  services.dbus.packages = with pkgs; [ dconf ];
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -217,12 +218,16 @@ with lib; {
       hwinfo
       lshw
       xboxdrv
+      glxinfo
 
       trayer
       linuxPackages.acpi_call
       lm_sensors
       man-pages
       man-pages-posix
+
+      
+      
       # xorg.xinit
       # (import ./packages/kmonad.nix)
     ]; # ++ (import ./programs/programming.nix pkgs);
@@ -315,6 +320,9 @@ with lib; {
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+  # enable flatpak for certain apps that don't work 
+  services.flatpak.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us,th";
@@ -343,6 +351,7 @@ with lib; {
   # services.xserver.displayManager.startx.enable = true;
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+  # services.xserver.windowManager.xmonad.extraPackages = hpkgs: [ hpkgs.taffybar ];
   services.xserver.digimend.enable = true;
   programs.xss-lock = {
     enable = true;

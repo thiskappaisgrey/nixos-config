@@ -29,25 +29,41 @@
   # ];
   # TODO Move over the Xmonad config to home-manager
   # TODO add gtk config with home-manager
-  gtk.iconTheme = {
-    package = pkgs.gnome3.hicolor-icon-theme;
-    name = "hicolor";
-  };
+  # gtk.iconTheme = {
+  #   package = pkgs.gnome3.adwaita-icon-theme;
+  #   name = "adwaita";
+  # };
   services.picom = {
     enable = true;
     fade = true;
     vSync = true;
     experimentalBackends = true;
     fadeDelta = 5;
+    backend="glx";
   };
-  services.keybase.enable = true;
+  services.emacs.enable = true;
+  services.emacs.defaultEditor = true;
+  # services.status-notifier-watcher.enable = true;
+  # services.caffeine.enable = true;
+  # services.flameshot.enable = true;
+  # services.network-manager-applet.enable= true;
+  # services.blueman-applet.enable = true;
+  xsession ={
+    enable = true;
+    importedVariables = [ "GDK_PIXBUF_ICON_LOADER" ];
+    preferStatusNotifierItems = true;
+  };
+  services.taffybar.enable = true;
+  services.xembed-sni-proxy.enable = true;
+  # services.keybase.enable = true;
   services.kbfs.enable = true;
   # TODO manage doom emacs using home manager too?????
   home.packages = with pkgs; [
     akira-unstable
-    gnome3.adwaita-icon-theme
-    ardour
-    audacity
+    # ardour
+    # audacity
+    pkgs.gnome3.adwaita-icon-theme
+    hicolor-icon-theme
     cachix
     cmus
     conky
@@ -64,7 +80,7 @@
     languagetool
     libqalculate
     libreoffice
-    lingot
+    lingot # tuner
     lmms
     lsd # next gen ls command
     mp3info
@@ -76,7 +92,7 @@
     poppler_utils # for pdf stuff
 
     rlwrap # for wrapping sqlite..
-    airshipper
+    # airshipper
 
     signal-desktop
     starship
@@ -112,17 +128,31 @@
     fd
     graphviz
     tldr
-    # taffybar
-    # haskellPackages.status-notifier-item
-    slack
+    # try taffybar again
+    taffybar
+    haskellPackages.status-notifier-item
+    # haskellPackages.gtk-sni-tray
+    networkmanagerapplet
     shotcut
     screenkey
+    
+    # audio control
+    # even though I use jack, I use pulseaudio for audio control
     pulsemixer
     pulseaudio
+    playerctl
+    # cool app for gpg keys, but I don't really use it
+    flameshot
+    vial
 
-    keybase
-    keybase-gui
+    blanket # whitenoise
+    fstl
+    simple-scan
 
+    # prorietary stuff 
+    slack
+    spotify
+    
   ];
 
   # programs.firejail = {
