@@ -8,8 +8,8 @@
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "thanawat";
-  home.homeDirectory = "/home/thanawat";
+  # home.username = "thanawat";
+  # home.homeDirectory = "/home/thanawat";
   fonts.fontconfig.enable = true;
 
   # This value determines the Home Manager release that your
@@ -20,6 +20,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
+  # home.stateVersion = "18.09";
   # programs.emacs = { enable = true; };
   # nixpkgs.overlays = [
   #   (self: super: {
@@ -60,8 +61,6 @@
   # TODO manage doom emacs using home manager too?????
   home.packages = with pkgs; [
     akira-unstable
-    # ardour
-    # audacity
     pkgs.gnome3.adwaita-icon-theme
     hicolor-icon-theme
     cachix
@@ -80,8 +79,6 @@
     languagetool
     libqalculate
     libreoffice
-    lingot # tuner
-    lmms
     lsd # next gen ls command
     mp3info
     mypaint
@@ -95,7 +92,7 @@
     # airshipper
 
     signal-desktop
-    starship
+    # starship
     sxiv
     tldr
     tmux
@@ -113,7 +110,17 @@
     scrot # screenshots
     slop # better screen selectoin
     niv
+
+    # Music stuff
     guitarix
+    lingot # tuner
+    # lmms
+    ardour
+    qjackctl
+    # audacity
+    hydrogen
+    x42-avldrums
+    rubberband
 
     alsa-utils # for volume control
     # hello
@@ -137,11 +144,10 @@
     screenkey
     
     # audio control
-    # even though I use jack, I use pulseaudio for audio control
+    # even though I use pipewire, I use pulseaudio for audio control
     pulsemixer
     pulseaudio
     playerctl
-    # cool app for gpg keys, but I don't really use it
     flameshot
     vial
 
@@ -152,9 +158,17 @@
     # prorietary stuff 
     slack
     spotify
+    discord
     
   ];
-
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+  # optional for nix flakes support in home-manager 21.11, not required in home-manager unstable or 22.05
+  programs.direnv.nix-direnv.enableFlakes = true;
+  # TODO Might have to move fish config here somehow I guess
+  programs.fish.enable = true;
+  
+  
   # programs.firejail = {
   #   enable = true;
   #   wrappedBinaries = {

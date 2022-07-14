@@ -192,7 +192,7 @@ with lib; {
       aspellDicts.en-computers
       gnutls
 
-      direnv
+      # direnv
       xmobar
       pass
       gnupg
@@ -237,7 +237,7 @@ with lib; {
     pinentryFlavor = "gtk2";
   };
   # Enable https://github.com/target/lorri for easier nix-shell integration
-  services.lorri.enable = true;
+  # services.lorri.enable = true;
   services.fwupd.enable = true;
   services.autorandr.enable = true;
   # services.clight = {
@@ -357,7 +357,7 @@ with lib; {
     enable = true;
     lockerCommand = "${pkgs.i3lock}/bin/i3lock";
   };
-  environment.shells = with pkgs; [ bashInteractive fish ];
+  environment.shells = with pkgs; [ bashInteractive ];
 
   services.syncthing = {
     enable = true;

@@ -35,11 +35,20 @@
         # Specify the path to your home configuration here
         #
         # Not sure how I would get around having to pass down pkgs at every level here to apply overlays and such
-        configuration = import ./home/home.nix;
+        # configuration = import ./home/home.nix;
         pkgs = pkgs;
-        inherit system username;
-        homeDirectory = "/home/${username}";
-        stateVersion = "22.05";
+        modules = [
+          ./home/home.nix
+          {
+            home = {
+              inherit username;
+              # username = "thanawat";
+              homeDirectory = "/home/${username}";
+              stateVersion = "22.05";
+            };
+          }
+        ];
+        
       };
 
     };
