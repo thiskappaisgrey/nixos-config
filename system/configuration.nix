@@ -261,7 +261,7 @@ with lib; {
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   ## Libvirtd - QEMU
   # virtualisation.libvirtd.enable = true;
-
+  # virtualisation.docker.enable = true;
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -380,6 +380,7 @@ with lib; {
       "input"
       "uinput"
       "jackaudio"
+      # "docker"
       # "libvirtd"
     ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;

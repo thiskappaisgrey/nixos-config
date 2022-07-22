@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./emacs ];
+  imports = [ ./emacs ./shell ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
@@ -164,10 +164,12 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   # optional for nix flakes support in home-manager 21.11, not required in home-manager unstable or 22.05
-  programs.direnv.nix-direnv.enableFlakes = true;
-  # TODO Might have to move fish config here somehow I guess
-  programs.fish.enable = true;
-  
+  # programs.direnv.nix-direnv.enableFlakes = true;
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    # TODO make config for this later
+  };
   
   # programs.firejail = {
   #   enable = true;
