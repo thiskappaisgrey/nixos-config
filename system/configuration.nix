@@ -66,7 +66,7 @@ with lib; {
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", TAG+="uaccess"''
 
   ];
-  services.udev.packages = [ pkgs.android-udev-rules ];
+  services.udev.packages = [ pkgs.android-udev-rules pkgs.openocd ];
   services.auto-cpufreq.enable = true; # power saving
   networking.hostName = "thanawat"; # Define your hostname.
   networking.networkmanager.enable =
@@ -144,9 +144,9 @@ with lib; {
           ];
       }).run;
       mmorph = self.callHackage "mmorph" "1.1.3" { };
-      xmonad = self.xmonad_0_17_0;
-      xmonad-contrib = self.xmonad-contrib_0_17_0;
-      xmonad-extras = self.xmonad-extras_0_17_0;
+      # xmonad = self.xmonad_0_17_0;
+      # xmonad-contrib = self.xmonad-contrib_0_17_0;
+      # xmonad-extras = self.xmonad-extras_0_17_0;
     })
   ];
   services.dbus.packages = with pkgs; [ dconf ];
@@ -355,7 +355,8 @@ with lib; {
   services.xserver.digimend.enable = true;
   programs.xss-lock = {
     enable = true;
-    lockerCommand = "${pkgs.i3lock}/bin/i3lock";
+    # hard code the lockscreen
+    lockerCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -u /home/thanawat/.dotfiles/pikachu.jpg";
   };
   environment.shells = with pkgs; [ bashInteractive ];
 
@@ -368,6 +369,7 @@ with lib; {
 
   # services.fprintd.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.extraGroups.plugdev = { };
   users.users.thanawat = {
     isNormalUser = true;
     extraGroups = [
@@ -380,6 +382,8 @@ with lib; {
       "input"
       "uinput"
       "jackaudio"
+      "plugdev"
+      "dialout"
       # "docker"
       # "libvirtd"
     ]; # Enable ‘sudo’ for the user.

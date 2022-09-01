@@ -6,9 +6,10 @@
     nixos-hardware.url =  "github:NixOS/nixos-hardware/master";
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -47,6 +48,24 @@
               stateVersion = "22.05";
             };
           }
+          # rust
+          ({ pkgs, ... }: {
+            nixpkgs.overlays = [ rust-overlay.overlays.default  ];
+            home.packages = [
+              (pkgs.rust-bin.stable.latest.default.override {
+              extensions = ["llvm-tools-preview"];
+              targets = [ "thumbv7em-none-eabihf" ];
+              })
+              # for embedded stuff
+              pkgs.gdb
+              pkgs.minicom
+              pkgs.gdb
+              pkgs.openocd
+              pkgs.rust-analyzer
+              # openocd is installed system wide
+              # pkgs.cargo-binutils
+            ];
+          })
         ];
         
       };

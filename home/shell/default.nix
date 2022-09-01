@@ -2,7 +2,7 @@
 
 {
   programs.fish.enable = true;
-  programs.fish.shellInit = """alias emacsc="emacsclient --create-frame --alternate-editor=\"\""
+  programs.fish.shellInit = ''alias emacsc="emacsclient --create-frame --alternate-editor=\"\""
 alias config='git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias valserver="valgrind --vgdb=yes --vgdb-error=0"
 alias weather="curl wttr.in"
@@ -16,5 +16,7 @@ set TERM "xterm-256color"
 # fenv "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" # uncomment later when installing fish
 # eval (direnv hook fish)
 # starship init fish | source
-fish_add_path -g ~/dotfiles/scripts"""
+fish_add_path -g ~/dotfiles/scripts
+fish_add_path -g ~/.cargo/bin
+'';
 }

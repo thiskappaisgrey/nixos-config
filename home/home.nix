@@ -159,6 +159,20 @@
     slack
     spotify
     discord
+
+    # Haskell
+    ghc
+    ghcid
+    cabal-install
+    stack
+
+    # Rust (so I don't have to make a nix-shell for every project)
+    # cargo
+    # rustc
+    # rustup
+    # rustfmt
+    # rust-analyzer
+    # clippy
     
   ];
   programs.direnv.enable = true;
