@@ -14,6 +14,10 @@
   };
 in*/
 {
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+  };
   programs.emacs =  {
     enable =  true;
     package =

@@ -7,6 +7,7 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, ... }:
@@ -32,6 +33,8 @@
 
         };
       };
+      # TODO rewrite this into the nixos module instead of an individual module
+      # so I don't have to update twice?
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         # Specify the path to your home configuration here
         #

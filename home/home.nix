@@ -1,71 +1,21 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./emacs ./shell ];
+  imports = [ ./emacs ./shell ./haskell.nix ./de.nix ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  # home.username = "thanawat";
-  # home.homeDirectory = "/home/thanawat";
   fonts.fontconfig.enable = true;
+  # I don't really want to manage xmonad with home-manager
+  # Having to switch home-configs everytime I want to configure xmonad (and experimenting with stuff) is really annoyoing
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  # home.stateVersion = "18.09";
-  # programs.emacs = { enable = true; };
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     airshipper = super.pkgs.callPackage ./airshipper.nix {};
-  #   })
-
-  # ];
-  # TODO Move over the Xmonad config to home-manager
-  # TODO add gtk config with home-manager
-  # gtk.iconTheme = {
-  #   package = pkgs.gnome3.adwaita-icon-theme;
-  #   name = "adwaita";
-  # };
-  services.picom = {
-    enable = true;
-    fade = true;
-    vSync = true;
-    experimentalBackends = true;
-    fadeDelta = 5;
-    backend="glx";
-  };
-  services.emacs.enable = true;
-  services.emacs.defaultEditor = true;
-  # services.status-notifier-watcher.enable = true;
-  # services.caffeine.enable = true;
-  # services.flameshot.enable = true;
-  # services.network-manager-applet.enable= true;
-  # services.blueman-applet.enable = true;
-  xsession ={
-    enable = true;
-    importedVariables = [ "GDK_PIXBUF_ICON_LOADER" ];
-    preferStatusNotifierItems = true;
-  };
-  services.taffybar.enable = true;
-  services.xembed-sni-proxy.enable = true;
-  # services.keybase.enable = true;
-  services.kbfs.enable = true;
-  # TODO manage doom emacs using home manager too?????
+  
+  # It seems that, if you write another "home.packages" in a module
+  # these get merged somehow..
   home.packages = with pkgs; [
-    akira-unstable
-    pkgs.gnome3.adwaita-icon-theme
-    hicolor-icon-theme
     cachix
     cmus
-    conky
+    # conky
     element-desktop
     exercism
     feh
@@ -79,20 +29,19 @@
     languagetool
     libqalculate
     libreoffice
+
+    
     lsd # next gen ls command
     mp3info
     mypaint
     obs-studio
     pandoc
-    pcmanfm # file manager
 
     poppler_utils # for pdf stuff
 
-    rlwrap # for wrapping sqlite..
-    # airshipper
+    # rlwrap # for wrapping sqlite..
 
     signal-desktop
-    # starship
     sxiv
     tldr
     tmux
@@ -107,8 +56,8 @@
     zathura
     zotero
 
-    scrot # screenshots
-    slop # better screen selectoin
+    # scrot # screenshots
+    # slop # better screen selectoin
     niv
 
     # Music stuff
@@ -122,12 +71,10 @@
     x42-avldrums
     rubberband
 
-    alsa-utils # for volume control
     # hello
-    pasystray
 
     tlwg
-    caffeine-ng
+    
     freetube
     anki
     nixfmt
@@ -135,22 +82,15 @@
     fd
     graphviz
     tldr
-    # try taffybar again
-    taffybar
-    haskellPackages.status-notifier-item
-    # haskellPackages.gtk-sni-tray
-    networkmanagerapplet
     shotcut
     screenkey
     
-    # audio control
     # even though I use pipewire, I use pulseaudio for audio control
     pulsemixer
-    pulseaudio
+    pulseaudio # for pactl 
     playerctl
-    flameshot
-    vial
 
+    
     blanket # whitenoise
     fstl
     simple-scan
@@ -159,39 +99,17 @@
     slack
     spotify
     discord
-
-    # Haskell
-    ghc
-    ghcid
-    cabal-install
-    stack
-
-    # Rust (so I don't have to make a nix-shell for every project)
-    # cargo
-    # rustc
-    # rustup
-    # rustfmt
-    # rust-analyzer
-    # clippy
-    
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   # optional for nix flakes support in home-manager 21.11, not required in home-manager unstable or 22.05
-  # programs.direnv.nix-direnv.enableFlakes = true;
+
+  
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
     # TODO make config for this later
   };
-  
-  # programs.firejail = {
-  #   enable = true;
-  #   wrappedBinaries = {
-  #     zoom = {
-  #       executable = "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
-  #       profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
-  #     };
-  #   };
-  # };
+
+
 }

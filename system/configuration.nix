@@ -19,30 +19,30 @@ with lib; {
       # START_CHARGE_THRESH_BAT0=75;
       # STOP_CHARGE_THRESH_BAT0=80;
 
-      CPU_SCALING_GOVERNOR_ON_AC="schedutil";
-      CPU_SCALING_GOVERNOR_ON_BAT="schedutil";
+      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
 
-      CPU_SCALING_MIN_FREQ_ON_AC=800000;
-      CPU_SCALING_MAX_FREQ_ON_AC=3500000;
-      CPU_SCALING_MIN_FREQ_ON_BAT=800000;
-      CPU_SCALING_MAX_FREQ_ON_BAT=2300000;
+      CPU_SCALING_MIN_FREQ_ON_AC = 800000;
+      CPU_SCALING_MAX_FREQ_ON_AC = 3500000;
+      CPU_SCALING_MIN_FREQ_ON_BAT = 800000;
+      CPU_SCALING_MAX_FREQ_ON_BAT = 2300000;
 
       # Enable audio power saving for Intel HDA, AC97 devices (timeout in secs).
       # A value of 0 disables, >=1 enables power saving (recommended: 1).
       # Default: 0 (AC), 1 (BAT)
-      SOUND_POWER_SAVE_ON_AC=0;
-      SOUND_POWER_SAVE_ON_BAT=1;
+      SOUND_POWER_SAVE_ON_AC = 0;
+      SOUND_POWER_SAVE_ON_BAT = 1;
 
       # Runtime Power Management for PCI(e) bus devices: on=disable, auto=enable.
       # Default: on (AC), auto (BAT)
-      RUNTIME_PM_ON_AC="on";
-      RUNTIME_PM_ON_BAT="auto";
+      RUNTIME_PM_ON_AC = "on";
+      RUNTIME_PM_ON_BAT = "auto";
 
       # Battery feature drivers: 0=disable, 1=enable
       # Default: 1 (all)
-      NATACPI_ENABLE=1;
-      TPACPI_ENABLE=1;
-      TPSMAPI_ENABLE=1;
+      NATACPI_ENABLE = 1;
+      TPACPI_ENABLE = 1;
+      TPSMAPI_ENABLE = 1;
     };
   };
   powerManagement.powertop.enable = true;
@@ -90,21 +90,7 @@ with lib; {
     enable = true;
     wrappedBinaries = {
       zoom = {
-        executable = let
-          # pkgs-old = import  (builtins.fetchGit {
-          #   # Descriptive name to make the store path easier to identify
-          #   name = "my-old-revision";
-          #   url = "https://github.com/NixOS/nixpkgs/";
-          #   ref = "refs/heads/nixpkgs-unstable";
-          #   rev = "5e15d5da4abb74f0dd76967044735c70e94c5af1";
-          # }) { };
-          # pkgs-old = import (builtins.fetchTarball {
-          #   url =
-          #     "https://github.com/NixOS/nixpkgs/archive/9986226d5182c368b7be1db1ab2f7488508b5a87.tar.gz";
-          #   sha256 =  "1b2palj1q8q6jdba7qwxgkiz3fab9c57a4jxjn1sar6qifamlgq7";
-          # }) { config.allowUnfree = true; };
-
-        in "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
+        executable = let in "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
         profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
       };
     };
@@ -161,76 +147,67 @@ with lib; {
       "https://hydra.iohk.io"
     ];
     settings.trusted-public-keys = [
-      "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
+      "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" # reflex-frp
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
     ];
     settings.auto-optimise-store = true;
   };
-  hardware.opengl.enable =  true;
+  hardware.opengl.enable = true;
 
   # arbtt - time tracking
   services.arbtt.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs;
-    [
-      wget
-      zip
-      unzip
-      neovim
-      mu
-      isync
-      brave
-      nyxt
-      firefox
-      alacritty
-      fish
-      git
-      wordnet
-      aspell
-      aspellDicts.en
-      aspellDicts.en-computers
-      gnutls
+  environment.systemPackages = with pkgs; [
+    wget
+    zip
+    unzip
+    neovim
+    mu
+    isync
+    brave
+    nyxt
+    firefox
+    alacritty
+    fish
+    git
+    wordnet
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+    # gnutls
 
-      # direnv
-      xmobar
-      pass
-      gnupg
-      mpv
-      htop
-      powertop
-      pulsemixer
-      pavucontrol
-      brightnessctl
-      dunst
-      libnotify
-      steam-run
-      # Latex and Minted .. TODO move this over to home-manager
-      (texlive.combine {
-        # Example of additional packages, probably unnecessary
-        inherit (texlive) scheme-full minted fancyhdr;
-      })
-      python38Packages.pygments
+    # direnv
+    # xmobar
+    pass
+    gnupg
 
-      gnuplot
+    mpv
+    htop
+    powertop
+    pulsemixer
+    dunst
+    libnotify
+    steam-run
+    # Latex and Minted ..
+    (texlive.combine {
+      # Example of additional packages, probably unnecessary
+      inherit (texlive) scheme-full minted fancyhdr;
+    })
+    python38Packages.pygments
 
-      hardinfo
-      hwinfo
-      lshw
-      xboxdrv
-      glxinfo
+    gnuplot
 
-      trayer
-      linuxPackages.acpi_call
-      lm_sensors
-      man-pages
-      man-pages-posix
+    hardinfo
+    hwinfo
+    lshw
+    xboxdrv
+    glxinfo
 
-      
-      
-      # xorg.xinit
-      # (import ./packages/kmonad.nix)
-    ]; # ++ (import ./programs/programming.nix pkgs);
+    man-pages
+    man-pages-posix
+    betterlockscreen
+  ]; # ++ (import ./programs/programming.nix pkgs);
   programs.steam.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -348,16 +325,20 @@ with lib; {
   services.xserver.displayManager.autoLogin.user = "thanawat";
   services.xserver.displayManager.defaultSession = "none+xmonad";
   services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.displayManager.startx.enable = true;
+  # TODO Move xmonad into $XDG_HOME
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
-  # services.xserver.windowManager.xmonad.extraPackages = hpkgs: [ hpkgs.taffybar ];
-  services.xserver.digimend.enable = true;
-  programs.xss-lock = {
-    enable = true;
-    # hard code the lockscreen
-    lockerCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -u /home/thanawat/.dotfiles/pikachu.jpg";
-  };
+  # The taffybar haskellpackage  is broken in nixpkgs so I just copied-paste the file I needed instead
+  # services.xserver.windowManager.xmonad.extraPackages = hpkgs: [ jpkgs.taffybar ];
+
+  services.xserver.digimend.enable = true; # for drawing tablets
+
+  # programs.xss-lock = {
+  #   enable = true;
+  #   # TODO  hard code the lockscreen
+  #   # set the right config
+  #   lockerCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dimblur";
+  # };
   environment.shells = with pkgs; [ bashInteractive ];
 
   services.syncthing = {
