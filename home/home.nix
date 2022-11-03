@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./emacs ./shell ./haskell.nix ./de.nix ];
+  imports = [ ./emacs ./shell ./haskell.nix ./de.nix  ./unity.nix ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
@@ -40,7 +40,7 @@
     poppler_utils # for pdf stuff
 
     # rlwrap # for wrapping sqlite..
-
+    
     signal-desktop
     sxiv
     tldr
@@ -72,6 +72,8 @@
     rubberband
 
     # hello
+    hledger
+    hledger-ui
 
     tlwg
     
@@ -95,6 +97,10 @@
     fstl
     simple-scan
 
+    # python is needed for stuff
+    python3
+    gcc
+    
     # prorietary stuff 
     slack
     spotify

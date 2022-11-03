@@ -78,6 +78,7 @@ with lib; {
   # replicates the default behaviour.
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
+  services.avahi.nssmdns = true;
   networking.interfaces.wlp3s0.useDHCP = true;
 
   # Configure network proxy if necessary
@@ -95,6 +96,10 @@ with lib; {
       };
     };
   };
+# For iphone
+  services.usbmuxd.enable = true;
+
+  
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -207,6 +212,11 @@ with lib; {
     man-pages
     man-pages-posix
     betterlockscreen
+    udisks
+
+    libimobiledevice
+    ifuse # optional, to mount using 'ifuse'
+
   ]; # ++ (import ./programs/programming.nix pkgs);
   programs.steam.enable = true;
   programs.gnupg.agent = {
@@ -238,7 +248,11 @@ with lib; {
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   ## Libvirtd - QEMU
   # virtualisation.libvirtd.enable = true;
+  # TODO try docker rootless first for security reasons.
   # virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+  };
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -273,7 +287,6 @@ with lib; {
     extraBackends = [ pkgs.hplipWithPlugin ];
   };
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
   # Enable sound.
   # sound.enable = true;
   hardware.bluetooth.enable = true;
@@ -365,7 +378,7 @@ with lib; {
       "jackaudio"
       "plugdev"
       "dialout"
-      # "docker"
+      "docker"
       # "libvirtd"
     ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
@@ -377,6 +390,9 @@ with lib; {
     dates = "2:00"; # Gotta figure out what times I could do this
     allowReboot = false;
   };
+  
+  services.udisks2.enable = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

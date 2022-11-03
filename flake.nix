@@ -1,7 +1,7 @@
 {
   description = "My nixos configuration and dotfiles";
   inputs =  {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-22.05";
     home-manager.url = "github:nix-community/home-manager/master";
     nixos-hardware.url =  "github:NixOS/nixos-hardware/master";
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";

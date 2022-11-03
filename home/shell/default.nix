@@ -12,7 +12,7 @@ set -a NIX_PATH $HOME/.nix-defexpr/channels
 ## Set environment
 set TERM "xterm-256color"             
 #set EDITOR "micro"
-
+export DOCKER_HOST="unix:///run/user/1000/docker.sock"
 # fenv "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" # uncomment later when installing fish
 # eval (direnv hook fish)
 # starship init fish | source

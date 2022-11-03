@@ -11,7 +11,7 @@
   };
   home.packages = with pkgs; [
     pcmanfm # file manager
-    pkgs.gnome3.adwaita-icon-theme
+    pkgs.gnome.adwaita-icon-theme
     hicolor-icon-theme
 
     # Bar
@@ -27,6 +27,11 @@
 
     # for arbtt tools
     haskellPackages.arbtt
+
+    rofi
+    rofi-pass
+    rofimoji
+    brightnessctl
   ];
   xsession ={
     enable = true;
@@ -37,13 +42,22 @@
   # services.xembed-sni-proxy.enable = true;
   services.taffybar.enable = true;
 
+  # TODO rewrite, maybe just write my own
   services.screen-locker = {
     enable = true;
-    inactiveInterval = 30;
+    # inactiveInterval = 30;
     lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
-    # xautolockExtraOptions = [
-    #   "Xautolock.killer: systemctl suspend"
-    # ];
+    xautolock.extraOptions = [
+      "Xautolock.killer: systemctl suspend"
+    ];
+    xautolock.enable = true;
   };
+
+  # xdg.mimeApps = {
+  #   enable = true;
+  #   defaultApplications = {
+  #     "unityhub" = [ "unityhub.dest"]
+  #   };
+  # };
 
 }
