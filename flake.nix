@@ -1,7 +1,7 @@
 {
   description = "My nixos configuration and dotfiles";
   inputs =  {
-    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     nixos-hardware.url =  "github:NixOS/nixos-hardware/master";
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
@@ -18,7 +18,7 @@
         config =  {
           allowUnfree = true;
         };
-        overlays = [ (import self.inputs.emacs-overlay) ];
+        # overlays = [ (import self.inputs.emacs-overlay) ];
       };
       lib = nixpkgs.lib;
       username =  "thanawat";
@@ -43,17 +43,18 @@
         pkgs = pkgs;
         modules = [
           ./home/home.nix
-          {
+          ({
             home = {
               inherit username;
               # username = "thanawat";
               homeDirectory = "/home/${username}";
               stateVersion = "22.05";
             };
-          }
+            nixpkgs.overlays = [ (import self.inputs.emacs-overlay) ];
+          })
           # rust
           ({ pkgs, ... }: {
-            nixpkgs.overlays = [ rust-overlay.overlays.default  ];
+            nixpkgs.overlays = [ rust-overlay.overlays.default ];
             home.packages = [
               (pkgs.rust-bin.stable.latest.default.override {
               extensions = ["llvm-tools-preview"];
