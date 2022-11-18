@@ -32,6 +32,10 @@
     rofi-pass
     rofimoji
     brightnessctl
+
+
+    # email
+    thunderbird
   ];
   xsession ={
     enable = true;

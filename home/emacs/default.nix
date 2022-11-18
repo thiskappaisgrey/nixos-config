@@ -21,8 +21,8 @@ in*/
   programs.emacs =  {
     enable =  true;
     package =
-      pkgs.emacs;
+      # pkgs.emacs;
      # (pkgs.emacsGit.override { nativeComp = true; }); # For latest emacs git:    
-     # pkgs.emacsNativeComp; 
+     pkgs.emacsNativeComp; 
   };
 }

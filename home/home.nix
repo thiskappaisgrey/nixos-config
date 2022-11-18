@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./emacs ./shell ./haskell.nix ./de.nix  ./unity.nix ];
+  imports = [ ./emacs/default.nix ./shell ./haskell.nix ./de.nix  ./unity.nix ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
@@ -9,7 +9,6 @@
   # I don't really want to manage xmonad with home-manager
   # Having to switch home-configs everytime I want to configure xmonad (and experimenting with stuff) is really annoyoing
 
-  
   # It seems that, if you write another "home.packages" in a module
   # these get merged somehow..
   home.packages = with pkgs; [
@@ -100,6 +99,9 @@
     # python is needed for stuff
     python3
     gcc
+
+    itd # pinetime app
+
     
     # prorietary stuff 
     slack
