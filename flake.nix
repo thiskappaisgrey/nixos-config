@@ -7,10 +7,13 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    # TODO use local flake to support my own languages instead
+    tree-grepper.url = "github:BrianHicks/tree-grepper";
     # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
+    emacs-ng.url = "github:emacs-ng/emacs-ng";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper, emacs-ng, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -18,7 +21,12 @@
         config =  {
           allowUnfree = true;
         };
-        # overlays = [ (import self.inputs.emacs-overlay) ];
+        # Interesting, this is how you consume a "eachDefaultSystem" flake. you have to specify the system in the overlay / package.
+        # TODO tree grepper defines it's own tree-sitter binaries, I wonder if I can just use those rather than some other one?
+        overlays = [
+          tree-grepper.overlay.x86_64-linux
+          # emacs-ng.overlays.default
+                   ];
       };
       lib = nixpkgs.lib;
       username =  "thanawat";
@@ -42,6 +50,7 @@
         # configuration = import ./home/home.nix;
         pkgs = pkgs;
         modules = [
+          # TODO move imports over to here.. and rewrite to use cfg instead.
           ./home/home.nix
           ({
             home = {
@@ -50,7 +59,15 @@
               homeDirectory = "/home/${username}";
               stateVersion = "22.05";
             };
-            nixpkgs.overlays = [ (import self.inputs.emacs-overlay) ];
+            nixpkgs.overlays = [ (import self.inputs.emacs-overlay)  ];
+            # use tree-grepper 
+            home.packages = [
+              pkgs.tree-grepper
+              # TODO try the rust version tmr
+              # emacs-ng.packages.x86_64-linux.emacsng-rust
+              emacs-ng.packages.x86_64-linux.emacsng
+              # emacs-ng.apps.emacsng-rust.x86_64-linux
+            ];
           })
           # rust
           ({ pkgs, ... }: {

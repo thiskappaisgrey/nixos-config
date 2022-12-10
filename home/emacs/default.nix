@@ -14,6 +14,7 @@
   };
 in*/
 {
+  # TODO I need to change this to use emacsng instead.. Just experimenting for now
   services.emacs = {
     enable = true;
     defaultEditor = true;

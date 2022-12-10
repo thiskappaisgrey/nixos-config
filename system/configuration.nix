@@ -99,7 +99,7 @@ with lib; {
 # For iphone
   services.usbmuxd.enable = true;
 
-  
+  programs.dconf.enable = true;  
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -148,12 +148,12 @@ with lib; {
     '';
     settings.substituters = [
       "https://cache.nixos.org/"
-      "https://nixcache.reflex-frp.org"
-      "https://hydra.iohk.io"
+      # "https://nixcache.reflex-frp.org"
+      # "https://hydra.iohk.io"
     ];
     settings.trusted-public-keys = [
-      "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" # reflex-frp
-      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      # "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" # reflex-frp
+      # "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
     ];
     settings.auto-optimise-store = true;
   };
@@ -361,7 +361,7 @@ with lib; {
     configDir = "/home/thanawat/.config/syncthing";
   };
 
-  # services.fprintd.enable = true;
+  services.fprintd.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraGroups.plugdev = { };
   users.users.thanawat = {
@@ -392,7 +392,8 @@ with lib; {
   };
   
   services.udisks2.enable = true;
-
+  # make hosts file editable by root
+  environment.etc.hosts.mode = "0644";
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

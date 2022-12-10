@@ -5,9 +5,16 @@
     enable = true;
     fade = true;
     vSync = true;
-    experimentalBackends = true;
+    # experimentalBackends = true;
     fadeDelta = 5;
     backend="glx";
+  };
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.graphite-gtk-theme;
+      name  = "graphite-gtk-theme";
+    };
   };
   home.packages = with pkgs; [
     pcmanfm # file manager

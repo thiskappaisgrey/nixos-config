@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./emacs/default.nix ./shell ./haskell.nix ./de.nix  ./unity.nix ];
+  imports = [ # ./emacs/default.nix
+              ./shell ./haskell.nix ./de.nix  ./unity.nix ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   
@@ -102,7 +103,9 @@
 
     itd # pinetime app
 
-    
+    helix
+
+    termonad
     # prorietary stuff 
     slack
     spotify
