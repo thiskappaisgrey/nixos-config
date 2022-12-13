@@ -20,7 +20,7 @@
     pcmanfm # file manager
     pkgs.gnome.adwaita-icon-theme
     hicolor-icon-theme
-
+    nerdfonts
     # Bar
     taffybar
     haskellPackages.status-notifier-item

@@ -40,6 +40,16 @@
           ];
 
         };
+        um560 = lib.nixosSystem {
+          inherit system;
+          modules =  [
+            ./system-modules/mobile-debugging.nix
+            ./other-system/configuration.nix
+          ];
+
+        };
+
+
       };
       # TODO rewrite this into the nixos module instead of an individual module
       # so I don't have to update twice?
@@ -65,7 +75,7 @@
               pkgs.tree-grepper
               # TODO try the rust version tmr
               # emacs-ng.packages.x86_64-linux.emacsng-rust
-              emacs-ng.packages.x86_64-linux.emacsng
+              # emacs-ng.packages.x86_64-linux.emacsng
               # emacs-ng.apps.emacsng-rust.x86_64-linux
             ];
           })

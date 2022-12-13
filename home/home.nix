@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # ./emacs/default.nix
+  imports = [  ./emacs/default.nix
               ./shell ./haskell.nix ./de.nix  ./unity.nix ];
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -29,7 +29,7 @@
     languagetool
     libqalculate
     libreoffice
-
+    alacritty
     
     lsd # next gen ls command
     mp3info
@@ -70,7 +70,8 @@
     hydrogen
     x42-avldrums
     rubberband
-
+    tenacity
+    
     # hello
     hledger
     hledger-ui

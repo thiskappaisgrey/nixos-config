@@ -11,6 +11,7 @@ with lib; {
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # laptop power
   services.upower.enable = true;
   # services.tlp.enable = true;
   services.tlp = {
@@ -47,6 +48,7 @@ with lib; {
   };
   powerManagement.powertop.enable = true;
 
+  # All the udev stuff for laptop power
   services.udev.extraRules = lib.mkMerge [
     # autosuspend USB devices
     ''
@@ -67,12 +69,17 @@ with lib; {
 
   ];
   services.udev.packages = [ pkgs.android-udev-rules pkgs.openocd ];
+  # autocpu - more power saving stuff
   services.auto-cpufreq.enable = true; # power saving
+
+  # Wireless  
   networking.hostName = "thanawat"; # Define your hostname.
   networking.networkmanager.enable =
     true; # Enables wireless support via wpa_supplicant.
   networking.enableIPv6 = false;
 
+  # Random networking stuff
+  
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
@@ -84,9 +91,14 @@ with lib; {
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  programs.adb.enable = true;
 
-  programs.slock.enable = true;
+  # for mobile debugging
+  # android
+  programs.adb.enable = true;
+  # For iphone
+  services.usbmuxd.enable = true;
+  
+  # firejail for zoom?? not sure
   programs.firejail = {
     enable = true;
     wrappedBinaries = {
@@ -96,8 +108,6 @@ with lib; {
       };
     };
   };
-# For iphone
-  services.usbmuxd.enable = true;
 
   programs.dconf.enable = true;  
   # Select internationalisation properties.
@@ -163,6 +173,7 @@ with lib; {
   services.arbtt.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  # TODO rework everything into a module.. since this is a bit unusable
   environment.systemPackages = with pkgs; [
     wget
     zip
