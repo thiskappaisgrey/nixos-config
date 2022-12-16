@@ -28,9 +28,15 @@
           # emacs-ng.overlays.default
                    ];
       };
-      lib = nixpkgs.lib;
+      # in nixpkgs.lib.extend - uses the makeExtensible pattern, which allows attribute sets to be extended.
+      # uses the fixed point combinator - the self is the current attribute set, and the super is the "old" attribute set
+      # this way, I can extend the nix lib to include my lib functions
+      lib = nixpkgs.lib.extend (self: super: {my = import ./lib.nix {inherit self pkgs; lib = self; }; });
+      
       username =  "thanawat";
     in {
+      
+      # lib = lib.my;
       nixosConfigurations = {
         thanawat = lib.nixosSystem {
           inherit system;
@@ -40,13 +46,22 @@
           ];
 
         };
+        # my um560 configuration
         um560 = lib.nixosSystem {
           inherit system;
+          inherit lib;
           modules =  [
             ./system-modules/mobile-debugging.nix
-            ./other-system/configuration.nix
+            ./um560/configuration.nix
+            # enable stuff here!
+            ({pkgs, ...}:
+              
+              {
+              ttsystem.mobile-debugging.android-enable = true;
+              ttsystem.mobile-debugging.apple-enable = true;
+            })
+            
           ];
-
         };
 
 
@@ -73,10 +88,7 @@
             # use tree-grepper 
             home.packages = [
               pkgs.tree-grepper
-              # TODO try the rust version tmr
-              # emacs-ng.packages.x86_64-linux.emacsng-rust
-              # emacs-ng.packages.x86_64-linux.emacsng
-              # emacs-ng.apps.emacsng-rust.x86_64-linux
+              # Emacsng flake build fails.. so not using it lol
             ];
           })
           # rust

@@ -237,7 +237,7 @@ with lib; {
   # Enable https://github.com/target/lorri for easier nix-shell integration
   # services.lorri.enable = true;
   services.fwupd.enable = true;
-  services.autorandr.enable = true;
+  # services.autorandr.enable = true;
   # services.clight = {
   #   enable = true;
   #   settings = { keyboard = { disabled = true; }; };

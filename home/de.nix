@@ -9,6 +9,7 @@
     fadeDelta = 5;
     backend="glx";
   };
+  services.dunst.enable = true;
   gtk = {
     enable = true;
     theme = {
@@ -40,6 +41,7 @@
     rofimoji
     brightnessctl
 
+    # autorandr
 
     # email
     thunderbird
@@ -50,6 +52,11 @@
     preferStatusNotifierItems = true;
   };
 
+
+  # TODO define different autorandr profiles for my different systems.. just 
+  programs.autorandr = {
+    enable = true;
+  };
   # services.xembed-sni-proxy.enable = true;
   services.taffybar.enable = true;
 

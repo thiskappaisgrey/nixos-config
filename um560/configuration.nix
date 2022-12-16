@@ -4,8 +4,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
-
+# let
+#   # pattern to import from library
+#   inherit (lib.my) allFileNames;
+# in
 {
+  # tt = allFileNames ../modules;
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -104,6 +108,7 @@ experimental-features = nix-command flakes
      xterm
      lm_sensors
      htop
+     # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
    ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -138,13 +143,6 @@ experimental-features = nix-command flakes
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "thanawat";
-  services.xserver.displayManager.defaultSession = "none+xmonad";
-  services.xserver.displayManager.lightdm.enable = true;
-  # TODO Move xmonad into $XDG_HOME
-  services.xserver.windowManager.xmonad.enable = true;
-  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
  
 }
 

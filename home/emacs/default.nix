@@ -13,6 +13,23 @@
     };
   };
 in*/
+let
+  # copied from the emacs overlay
+  libName = drv: lib.removeSuffix "-grammar" drv.pname;
+  libSuffix = "so";
+  olib = drv: ''lib${libName drv}.${libSuffix}'';
+  linkCmd = drv: ''ln -s ${drv}/parser $out/lib/${olib drv}'';
+  # this outputs a bunch of grammars files that I can add to emacs loadpath
+  plugins = with pkgs.tree-sitter-grammars; [
+    tree-sitter-haskell
+    tree-sitter-verilog
+    tree-sitter-nix
+  ];
+    # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p));
+  # my-ts-grammars = ()
+  tt-tree-sitter-grammars = pkgs.runCommand "tt-tree-sitter-grammars" {}
+    (lib.concatStringsSep "\n" (["mkdir -p $out/lib"] ++ (map linkCmd plugins)));
+in
 {
   # TODO I need to change this to use emacsng instead.. Just experimenting for now
   services.emacs = {
@@ -23,7 +40,17 @@ in*/
     enable =  true;
     package =
       # pkgs.emacs;
+      # try the latest unstable emacs..
+      pkgs.emacsGit;
+    
      # (pkgs.emacsGit.override { nativeComp = true; }); # For latest emacs git:    
-     pkgs.emacsNativeComp; 
+    # prob wanna try the tree-
+     # pkgs.; 
+  };
+  home.packages = [
+    tt-tree-sitter-grammars
+  ];
+  home.sessionVariables = {
+    TS_LIBS = "${tt-tree-sitter-grammars}";
   };
 }
