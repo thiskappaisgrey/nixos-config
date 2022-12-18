@@ -108,8 +108,15 @@ experimental-features = nix-command flakes
      xterm
      lm_sensors
      htop
+     pass
      # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
    ];
+
+  # i will probably migrate to bitwarden.
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "gtk2";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -143,6 +150,14 @@ experimental-features = nix-command flakes
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+
+  # services.xserver.displayManager.autoLogin.enable = true;
+  # services.xserver.displayManager.autoLogin.user = "thanawat";
+  # services.xserver.displayManager.defaultSession = "none+xmonad";
+  # services.xserver.displayManager.lightdm.enable = true;
+  # services.xserver.windowManager.xmonad.enable = true;
+  # services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+
  
 }
 

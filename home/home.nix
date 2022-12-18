@@ -111,6 +111,14 @@
     slack
     spotify
     discord
+
+    # spelling - move to emacs later
+    wordnet
+    aspell
+    aspellDicts.en
+    aspellDicts.en-computers
+
+    # pass
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

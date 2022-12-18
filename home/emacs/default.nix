@@ -1,3 +1,4 @@
+# TODO allow for my own options I guess - of which version of emacs I want to use.
 { config, lib, pkgs, ... }:
 /*let
   myEmacs = pkgs.emacsWithPackagesFromUsePackage {

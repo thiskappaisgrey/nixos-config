@@ -37,12 +37,25 @@
     in {
       
       # lib = lib.my;
+      # nixosModules =   {ttsystem = {}; } // lib.my.mapModules import ./system-modules;
+      # nixosModules = import ./system-module.nix;
+      # nixosModule = { config, lib, pkgs, ... }:
+      #   with lib;
+      #   let cfg = config.hello;
+      #   in {
+      #     options.hello = {
+      #       enable = mkEnableOption "enables the hello service";
+      #     };
+      #     config = mkIf cfg.enable {
+      #     };
+      #   };
       nixosConfigurations = {
         thanawat = lib.nixosSystem {
           inherit system;
           modules =  [
-            ./system/configuration.nix
-            nixos-hardware.nixosModules.lenovo-thinkpad-t480
+            # ./system/configuration.nix
+            # self.nixosModules
+            # nixos-hardware.nixosModules.lenovo-thinkpad-t480
           ];
 
         };
@@ -50,15 +63,21 @@
         um560 = lib.nixosSystem {
           inherit system;
           inherit lib;
-          modules =  [
-            ./system-modules/mobile-debugging.nix
+          
+          modules = [
+            # ./system-modules/xmonad-de.nix
+            # ./system-modules/simple-module.nix
+            # self.nixosModules
+            ./system-modules/simple-module.nix
             ./um560/configuration.nix
-            # enable stuff here!
-            ({pkgs, ...}:
+            # enable stuff here! 
+           ({pkgs, ...}:
               
               {
-              ttsystem.mobile-debugging.android-enable = true;
-              ttsystem.mobile-debugging.apple-enable = true;
+              # ttsystem.mobile-debugging.android-enable = true;
+                # ttsystem.mobile-debugging.apple-enable = true;
+                # this kind of works?
+                  # ttsystem.simple-module.enable = true;
             })
             
           ];

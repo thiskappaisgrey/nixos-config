@@ -25,6 +25,7 @@
     # Bar
     taffybar
     haskellPackages.status-notifier-item
+    betterlockscreen
 
 
     # applets

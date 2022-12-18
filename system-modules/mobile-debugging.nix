@@ -1,4 +1,4 @@
-{config, pkgs, lib, ...}:
+{ config, pkgs, lib, ...}:
 let
   cfg = config.ttsystem.mobile-debugging;
 in
