@@ -2,7 +2,7 @@
 let
   cfg = config.ttsystem.mobile-debugging;
 in
-with pkgs.lib;
+with lib;
 {
   options = {
     ttsystem.mobile-debugging = {
@@ -19,6 +19,8 @@ with pkgs.lib;
     };
   };
   config =  {
+    # you need this for andriod debugging I think
+    services.udev.packages = [ pkgs.android-udev-rules ];
     # android
     programs.adb.enable = cfg.android-enable;
     # For iphone

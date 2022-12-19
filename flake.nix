@@ -32,23 +32,10 @@
       # uses the fixed point combinator - the self is the current attribute set, and the super is the "old" attribute set
       # this way, I can extend the nix lib to include my lib functions
       lib = nixpkgs.lib.extend (self: super: {my = import ./lib.nix {inherit self pkgs; lib = self; }; });
-      
       username =  "thanawat";
     in {
-      
-      # lib = lib.my;
+      lib = lib;
       # nixosModules =   {ttsystem = {}; } // lib.my.mapModules import ./system-modules;
-      # nixosModules = import ./system-module.nix;
-      # nixosModule = { config, lib, pkgs, ... }:
-      #   with lib;
-      #   let cfg = config.hello;
-      #   in {
-      #     options.hello = {
-      #       enable = mkEnableOption "enables the hello service";
-      #     };
-      #     config = mkIf cfg.enable {
-      #     };
-      #   };
       nixosConfigurations = {
         thanawat = lib.nixosSystem {
           inherit system;
@@ -64,20 +51,22 @@
           inherit system;
           inherit lib;
           
-          modules = [
-            # ./system-modules/xmonad-de.nix
-            # ./system-modules/simple-module.nix
-            # self.nixosModules
-            ./system-modules/simple-module.nix
+          # figured it out..
+          # lib.my.mapModules (a: a) ./system-modules - basically returns all of the absolute nix paths in ./system-modules# then, I can import them using this:
+          modules =  (lib.my.mapModules (a: a) ./system-modules) ++ [
             ./um560/configuration.nix
             # enable stuff here! 
            ({pkgs, ...}:
               
               {
-              # ttsystem.mobile-debugging.android-enable = true;
-                # ttsystem.mobile-debugging.apple-enable = true;
+                ttsystem.mobile-debugging.android-enable = true;
                 # this kind of works?
-                  # ttsystem.simple-module.enable = true;
+                ttsystem.simple-module.enable = true;
+                ttsystem.xmonad-de = {
+                  enable = true;
+                  diskEncryptautoLogin = true;
+                };
+                ttsystem.syncthing.enable = true;
             })
             
           ];

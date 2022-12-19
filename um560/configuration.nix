@@ -151,13 +151,6 @@ experimental-features = nix-command flakes
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
-  # services.xserver.displayManager.autoLogin.enable = true;
-  # services.xserver.displayManager.autoLogin.user = "thanawat";
-  # services.xserver.displayManager.defaultSession = "none+xmonad";
-  # services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.windowManager.xmonad.enable = true;
-  # services.xserver.windowManager.xmonad.enableContribAndExtras = true;
-
  
 }
 

@@ -144,10 +144,6 @@ with lib; {
             libpng
           ];
       }).run;
-      mmorph = self.callHackage "mmorph" "1.1.3" { };
-      # xmonad = self.xmonad_0_17_0;
-      # xmonad-contrib = self.xmonad-contrib_0_17_0;
-      # xmonad-extras = self.xmonad-extras_0_17_0;
     })
   ];
   services.dbus.packages = with pkgs; [ dconf ];

@@ -15,11 +15,11 @@ rec {
   # readDir outputs an attrSet with file types, which can be one of
   # The possible values for the file type are "regular", "directory", "symlink" and "unknown".
   # goal is to get a list of all the regular files and map a function over them
-  mapModules' = fn: dir:
+  mapModules = fn: dir:
     let
       # list of all nix modules, for example
       # [ "mobile-debugging.nix" "thinkpad-power.nix" "xmonad-de.nix" ]
-      toPath = file: "${toString dir}/${file}";
+      toPath = file: ./. +  "/${builtins.baseNameOf dir}/${file}";
       modules = mapAttrsToList (moduleName: moduleType: toPath moduleName) (filterAttrs (name: value: value == "regular" && (name != "default.nix") && (hasSuffix ".nix" name)) (readDir dir));
     in
       map fn modules;
