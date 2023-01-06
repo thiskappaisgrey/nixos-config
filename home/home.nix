@@ -113,10 +113,8 @@
     discord
 
     # spelling - move to emacs later
-    wordnet
-    aspell
-    aspellDicts.en
-    aspellDicts.en-computers
+    # wordnet
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
     # pass
   ];

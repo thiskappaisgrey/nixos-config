@@ -23,6 +23,9 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # enable arbtt
+  services.arbtt.enable = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;

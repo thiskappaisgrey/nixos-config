@@ -12,7 +12,9 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-
+  # switch to latest kernel for wifi card
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/3430d06a-bd42-47cc-9a4b-64564c8d2642";
       fsType = "ext4";

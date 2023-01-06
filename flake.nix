@@ -67,6 +67,7 @@
                   diskEncryptautoLogin = true;
                 };
                 ttsystem.syncthing.enable = true;
+                ttsystem.gaming.enable = true;
             })
             
           ];
