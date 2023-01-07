@@ -39,7 +39,7 @@
       nixosConfigurations = {
         thinkpad-t480 = lib.nixosSystem {
           inherit system;
-          modules =  [
+          modules = (lib.my.mapModules (a: a) ./system-modules) ++ [
             ./thinkpad-t480/configuration.nix
             nixos-hardware.nixosModules.lenovo-thinkpad-t480
             ({pkgs, ...}:
@@ -53,6 +53,8 @@
                 ttsystem.syncthing.enable = true;
                 ttsystem.mobile-debugging.android-enable = true;
                 ttsystem.mobile-debugging.apple-enable = true;
+                ttsystem.audio.enable = true;
+                ttsystem.printing.enable = true;
               })
           ];
 
