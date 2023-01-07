@@ -29,7 +29,6 @@
     languagetool
     libqalculate
     libreoffice
-    alacritty
     
     lsd # next gen ls command
     mp3info
@@ -102,9 +101,14 @@
     python3
     gcc
 
+    # more browsers
+    brave
+    nyxt
+
     itd # pinetime app
 
     helix
+    powertop
 
     termonad
     # prorietary stuff 
@@ -117,6 +121,13 @@
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
     # pass
+
+    # other tools
+    zip
+    unzip
+    libnotify
+    gnuplot
+
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

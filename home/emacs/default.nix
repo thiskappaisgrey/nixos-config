@@ -50,6 +50,17 @@ in
   };
   home.packages = [
     tt-tree-sitter-grammars
+
+    # If I want to check email with emacs
+    #     mu
+    # isync
+    # Latex and Minted - install this in home
+    (texlive.combine {
+      # Example of additional packages, probably unnecessary
+      inherit (texlive) scheme-full minted fancyhdr;
+    })
+    python38Packages.pygments
+
   ];
   home.sessionVariables = {
     TS_LIBS = "${tt-tree-sitter-grammars}";

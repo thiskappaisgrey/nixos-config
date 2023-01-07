@@ -37,12 +37,23 @@
       lib = lib;
       # nixosModules =   {ttsystem = {}; } // lib.my.mapModules import ./system-modules;
       nixosConfigurations = {
-        thanawat = lib.nixosSystem {
+        thinkpad-t480 = lib.nixosSystem {
           inherit system;
           modules =  [
-            # ./system/configuration.nix
-            # self.nixosModules
-            # nixos-hardware.nixosModules.lenovo-thinkpad-t480
+            ./thinkpad-t480/configuration.nix
+            nixos-hardware.nixosModules.lenovo-thinkpad-t480
+            ({pkgs, ...}:
+              {
+                # TTsystem things to enable 
+                ttsystem.xmonad-de = {
+                  enable = true;
+                  diskEncryptautoLogin = true;
+                };
+                ttsystem.gaming.enable = true;
+                ttsystem.syncthing.enable = true;
+                ttsystem.mobile-debugging.android-enable = true;
+                ttsystem.mobile-debugging.apple-enable = true;
+              })
           ];
 
         };
@@ -61,7 +72,7 @@
               {
                 ttsystem.mobile-debugging.android-enable = true;
                 # this kind of works?
-                ttsystem.simple-module.enable = true;
+                # ttsystem.simple-module.enable = true;
                 ttsystem.xmonad-de = {
                   enable = true;
                   diskEncryptautoLogin = true;

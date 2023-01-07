@@ -20,25 +20,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   programs.dconf.enable = true;
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   # enable arbtt
   services.arbtt.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-  
   services.xserver.digimend.enable = true; # for drawing tablets
 
   networking.hostName = "thanawat"; # Define your hostname.
@@ -92,7 +76,9 @@ experimental-features = nix-command flakes
   # Define a user account. Don't forget to set a password with ‘passwd’.
    users.users.thanawat = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel"
+                     "adbusers"
+                   ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
      ];
    };
@@ -104,14 +90,15 @@ experimental-features = nix-command flakes
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     firefox
-     git
-     xterm
-     lm_sensors
-     htop
-     pass
+    neovim
+    wget
+    firefox
+    git
+    xterm
+    lm_sensors
+    htop
+    pass
+    alacritty
      # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
    ];
 
@@ -121,24 +108,6 @@ experimental-features = nix-command flakes
     pinentryFlavor = "gtk2";
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
   services.udisks2.enable = true;
 
   # Copy the NixOS configuration file and link it from the resulting system

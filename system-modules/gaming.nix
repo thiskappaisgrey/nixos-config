@@ -40,6 +40,9 @@ with lib;
 
     environment.systemPackages = with pkgs; [
       steam-run
+      # for xbox controllers
+      xboxdrv
+
     ];
       programs.steam.enable = true;
 
