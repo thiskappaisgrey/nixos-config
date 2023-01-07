@@ -48,13 +48,14 @@ in
     # prob wanna try the tree-
      # pkgs.; 
   };
-  home.packages = [
+  home.packages = with pkgs; [
     tt-tree-sitter-grammars
 
     # If I want to check email with emacs
     #     mu
     # isync
     # Latex and Minted - install this in home
+    # this is 4 GB lol..
     (texlive.combine {
       # Example of additional packages, probably unnecessary
       inherit (texlive) scheme-full minted fancyhdr;
