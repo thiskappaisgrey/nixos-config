@@ -25,6 +25,7 @@
         # TODO tree grepper defines it's own tree-sitter binaries, I wonder if I can just use those rather than some other one?
         overlays = [
           tree-grepper.overlay.x86_64-linux
+          (import self.inputs.emacs-overlay)
           # emacs-ng.overlays.default
                    ];
       };
@@ -81,6 +82,9 @@
                 };
                 ttsystem.syncthing.enable = true;
                 ttsystem.gaming.enable = true;
+                ttsystem.audio.enable = true;
+                ttsystem.printing.enable = true;
+
             })
             
           ];
@@ -90,15 +94,23 @@
       };
       # TODO rewrite this into the nixos module instead of an individual module
       # so I don't have to update twice?
-      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations = {
+       "desktop" = home-manager.lib.homeManagerConfiguration {
         # Specify the path to your home configuration here
         #
-        # Not sure how I would get around having to pass down pkgs at every level here to apply overlays and such
-        # configuration = import ./home/home.nix;
         pkgs = pkgs;
         modules = [
+          ({
+            nixpkgs.overlays = [ (import self.inputs.emacs-overlay)  rust-overlay.overlays.default ];
+          })
           # TODO move imports over to here.. and rewrite to use cfg instead.
           ./home/home.nix
+          ./home/emacs/default.nix
+          ./home/shell
+          ./home/haskell.nix
+          ./home/de.nix
+          ./home/unity.nix
+
           ({
             home = {
               inherit username;
@@ -106,33 +118,60 @@
               homeDirectory = "/home/${username}";
               stateVersion = "22.05";
             };
-            nixpkgs.overlays = [ (import self.inputs.emacs-overlay)  ];
             # use tree-grepper 
             home.packages = [
               pkgs.tree-grepper
               # Emacsng flake build fails.. so not using it lol
             ];
+            tthome.emacs = {
+              enable = true;
+              emacsPkg = pkgs.emacsGit;
+            };
           })
           # rust
-          ({ pkgs, ... }: {
-            nixpkgs.overlays = [ rust-overlay.overlays.default ];
-            home.packages = [
-              (pkgs.rust-bin.stable.latest.default.override {
-              extensions = ["llvm-tools-preview"];
-              targets = [ "thumbv7em-none-eabihf" ];
-              })
-              # for embedded stuff
-              pkgs.gdb
-              pkgs.minicom
-              pkgs.gdb
-              pkgs.openocd
-              pkgs.rust-analyzer
-              # openocd is installed system wide
-              # pkgs.cargo-binutils
-            ];
-          })
+          ./home/rust.nix
         ];
         
+       };
+
+       laptop = home-manager.lib.homeManagerConfiguration {
+        # Specify the path to your home configuration here
+        #
+        pkgs = pkgs;
+        modules = [
+          ({
+            nixpkgs.overlays = [ (import self.inputs.emacs-overlay)  rust-overlay.overlays.default ];
+          })
+          # TODO move imports over to here.. and rewrite to use cfg instead.
+          ./home/home.nix
+          ./home/emacs/default.nix
+          ./home/shell
+          ./home/haskell.nix
+          ./home/de.nix
+          ./home/unity.nix
+
+          ({
+            home = {
+              inherit username;
+              # username = "thanawat";
+              homeDirectory = "/home/${username}";
+              stateVersion = "22.05";
+            };
+            # use tree-grepper 
+            home.packages = [
+              pkgs.tree-grepper
+              # Emacsng flake build fails.. so not using it lol
+            ];
+            tthome.emacs = {
+              enable = true;
+              emacsPkg = pkgs.emacs;
+            };
+          })
+          # rust
+          ./home/rust.nix
+        ];
+        
+       };
       };
 
     };

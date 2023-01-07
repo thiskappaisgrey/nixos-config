@@ -83,7 +83,7 @@ with lib; {
   
 
   # Wireless  
-  networking.hostName = "thanawat"; # Define your hostname.
+  networking.hostName = "thanawat-thinkpad"; # Define your hostname.
   networking.networkmanager.enable =
     true; # Enables wireless support via wpa_supplicant.
 
