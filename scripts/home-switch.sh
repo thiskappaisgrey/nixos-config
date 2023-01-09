@@ -6,7 +6,7 @@ if [[ $(hostname) == "thanawat-um560" ]]; then
     home-manager switch --flake "${dotPath}#desktop";
 else
     echo "not on um560";
-    home-manager switch --flake "${dotPath}#thinkpad-t480";
+    home-manager switch --flake "${dotPath}#laptop";
 fi
 
 
