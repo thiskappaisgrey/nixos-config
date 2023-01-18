@@ -97,7 +97,7 @@ experimental-features = nix-command flakes
     xterm
     lm_sensors
     htop
-    pass
+    # pass
     alacritty
      # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
    ];

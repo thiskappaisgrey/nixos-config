@@ -118,7 +118,7 @@
     # wordnet
     (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
-    # pass
+    pass
 
     # other tools
     zip
