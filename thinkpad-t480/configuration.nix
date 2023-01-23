@@ -92,19 +92,6 @@ with lib; {
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  
-  # firejail for zoom
-  programs.firejail = {
-    enable = true;
-    wrappedBinaries = {
-      zoom = {
-        executable = let in "${lib.getBin pkgs.zoom-us}/bin/zoom-us";
-        profile = "${pkgs.firejail}/etc/firejail/zoom.profile";
-      };
-    };
-  };
-
-  
 
   programs.dconf.enable = true;  
   services.dbus.packages = with pkgs; [ dconf ];

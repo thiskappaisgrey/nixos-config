@@ -73,11 +73,19 @@ experimental-features = nix-command flakes
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # TODO Virtualization
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
+  
   # Define a user account. Don't forget to set a password with ‘passwd’.
    users.users.thanawat = {
      isNormalUser = true;
      extraGroups = [ "wheel"
                      "adbusers"
+                     "input"
                    ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
      ];

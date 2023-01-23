@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  # for rust development - just install it globally?
   home.packages = [
     (pkgs.rust-bin.stable.latest.default.override {
       extensions = ["llvm-tools-preview"];

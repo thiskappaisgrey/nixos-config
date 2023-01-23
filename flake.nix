@@ -56,6 +56,7 @@
                 ttsystem.mobile-debugging.apple-enable = true;
                 ttsystem.audio.enable = true;
                 ttsystem.printing.enable = true;
+                ttsystem.zoom.enable = true;
               })
           ];
 
@@ -73,9 +74,8 @@
            ({pkgs, ...}:
               
               {
+                # Enable system modules
                 ttsystem.mobile-debugging.android-enable = true;
-                # this kind of works?
-                # ttsystem.simple-module.enable = true;
                 ttsystem.xmonad-de = {
                   enable = true;
                   diskEncryptautoLogin = true;
@@ -84,6 +84,7 @@
                 ttsystem.gaming.enable = true;
                 ttsystem.audio.enable = true;
                 ttsystem.printing.enable = true;
+                ttsystem.zoom.enable = true;
 
             })
             

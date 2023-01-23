@@ -16,6 +16,10 @@
       package = pkgs.graphite-gtk-theme;
       name  = "graphite-gtk-theme";
     };
+    iconTheme = {
+      name = "Qogir";
+      package = pkgs.qogir-icon-theme;
+    };
   };
   home.packages = with pkgs; [
     pcmanfm # file manager
@@ -46,6 +50,11 @@
 
     # email
     thunderbird
+
+    # video
+    mpv
+    kmix
+    yt-dlp
   ];
   xsession ={
     enable = true;
