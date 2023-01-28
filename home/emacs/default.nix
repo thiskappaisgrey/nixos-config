@@ -74,6 +74,8 @@ in
             latexmk
             textcase
             scheme-medium
+            # for communitive diagrams
+            tikz-cd
           ;
           # scheme-full minted fancyhdr;
         })

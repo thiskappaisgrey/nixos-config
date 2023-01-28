@@ -57,6 +57,7 @@
                 ttsystem.audio.enable = true;
                 ttsystem.printing.enable = true;
                 ttsystem.zoom.enable = true;
+                
               })
           ];
 
@@ -85,6 +86,8 @@
                 ttsystem.audio.enable = true;
                 ttsystem.printing.enable = true;
                 ttsystem.zoom.enable = true;
+                # enable version control
+                ttsystem.version-control.enable = true;
 
             })
             

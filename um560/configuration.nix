@@ -81,11 +81,14 @@ experimental-features = nix-command flakes
 
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.thanawat = {
+  users.extraGroups.plugdev = { };
+  users.users.thanawat = {
      isNormalUser = true;
      extraGroups = [ "wheel"
                      "adbusers"
                      "input"
+                     "plugdev"
+                     "dialout"
                    ]; # Enable ‘sudo’ for the user.
      packages = with pkgs; [
      ];
@@ -93,6 +96,9 @@ experimental-features = nix-command flakes
   services.udev.extraRules = lib.mkMerge [
     ''
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", TAG+="uaccess"''
+    # adafruit tft.. hopefully this works?
+    ''
+    SUBSYSTEMS=="usb|tty|hidraw", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="810f", MODE="664", GROUP="plugdev" ''
 
   ];
   # List packages installed in system profile. To search, run:
