@@ -51,7 +51,11 @@
     ytfzf
     ytmdl
     zathura
+
+
+    # citation management / pdf-reader
     zotero
+    papis
 
     # scrot # screenshots
     # slop # better screen selectoin
