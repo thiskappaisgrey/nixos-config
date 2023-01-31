@@ -130,6 +130,10 @@
     libnotify
     gnuplot
 
+    # pdf
+    sioyek
+    libsForQt5.okular
+
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
