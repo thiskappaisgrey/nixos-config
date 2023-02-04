@@ -1,0 +1,21 @@
+# files produced by compiler
+*.o
+*.hi
+*.errors
+
+# compiled xmonad executable
+xmonad-*
+
+# files created by cabal
+dist/
+dist-newstyle/
+cabal.project.local*
+# files automatically created by xmonad
+xmonad.state
+# prompt-history
+prompt-history
+# The compiled binary
+xmonad
+
+.direnv
+.dir-locals.el

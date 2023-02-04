@@ -88,4 +88,18 @@
   #   };
   # };
 
+  # These files (Xmonad / Taffybar config) are "impure" configs b/c I
+  # change them a lot.. I just want them symlinked without having to
+  # have them managed by home-manager
+  home.file = {
+    xmonad.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/xmonad/";
+    xmonad.target = "/home/thanawat/.xmonad";
+    
+    taffybar.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/taffybar/";
+    taffybar.target = "/home/thanawat/.config/taffybar";
+    
+    sioyek.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/sioyek/";
+    sioyek.target = "/home/thanawat/.config/sioyek";
+  };
+
 }
