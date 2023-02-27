@@ -16,6 +16,7 @@ with lib;
       git
       # patch based version control
       pijul
+      darcs
     ];
     # enable openssh
     services.openssh = {

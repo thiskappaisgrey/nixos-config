@@ -113,7 +113,7 @@
           ./home/shell
           ./home/haskell.nix
           ./home/de.nix
-          ./home/unity.nix
+          # ./home/unity.nix
 
           ({
             home = {
@@ -127,9 +127,12 @@
               pkgs.tree-grepper
               # Emacsng flake build fails.. so not using it lol
             ];
+            # I can change this to emacs-ng instead
             tthome.emacs = {
               enable = true;
               emacsPkg = pkgs.emacsGit;
+              # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
+              # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
             };
           })
           # rust
@@ -152,8 +155,7 @@
           ./home/shell
           ./home/haskell.nix
           ./home/de.nix
-          ./home/unity.nix
-
+          # ./home/unity.nix
           ({
             home = {
               inherit username;

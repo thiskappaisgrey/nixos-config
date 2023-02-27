@@ -440,7 +440,7 @@ myKeys conf =
                  withFocused $ toggleDynamicNSP "dyn1")
            -- , ("M-s-b", withFocused $ toggleDynamicNSP "dyn2")
            , ("M-e"  , addName "Bring Dynamic Scratchpad" $ dynamicNSPAction "dyn1")
-           , ("M-l", addName "float and resize left corner" $ withFocused $ floatAndResize (W.RationalRect (1 / 3) 0 (2 / 3) (2 / 3)))
+           -- , ("M-l", addName "float and resize left corner" $ withFocused $ floatAndResize (W.RationalRect (1 / 3) 0 (2 / 3) (2 / 3)))
            -- , ("M-b"  , dynamicNSPAction "dyn2")
            ]
     ^++^ subKeys

@@ -30,7 +30,6 @@
     
     lsd # next gen ls command
     mp3info
-    mypaint
     obs-studio
     pandoc
 
@@ -59,7 +58,7 @@
 
     # scrot # screenshots
     # slop # better screen selectoin
-    niv
+    # niv
 
     # Music stuff
     guitarix
@@ -108,8 +107,12 @@
     nyxt
 
     itd # pinetime app
-
+    # rust editors
     helix
+    # this doesn't really fit with my style tbh.. I like helix more
+    lapce
+
+    
     powertop
 
     termonad
@@ -134,6 +137,14 @@
     sioyek
     libsForQt5.okular
 
+    # common lisp (impure)
+    sbcl
+
+    # ldtk
+    ldtk
+
+    # airshipper (games)
+    airshipper
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

@@ -38,6 +38,7 @@ in
         enable = true;
         defaultEditor = true;
       };
+      # TODO I'm not sure how to ma
       programs.emacs =  {
         enable =  true;
         package =

@@ -53,6 +53,7 @@
     extraOptions = ''
 experimental-features = nix-command flakes
 '';
+    trustedUsers = ["root" "thanawat"];
   };
   
 
@@ -73,7 +74,8 @@ experimental-features = nix-command flakes
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # TODO Virtualization
+  # TODO Virtualization (move this to it's own config file)
+  virtualisation.libvirtd.enable = true; 
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
@@ -123,7 +125,7 @@ experimental-features = nix-command flakes
   };
 
   services.udisks2.enable = true;
-
+  hardware.opengl.enable = true;
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.

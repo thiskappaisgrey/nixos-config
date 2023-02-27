@@ -55,6 +55,13 @@
     mpv
     kmix
     yt-dlp
+
+    # drawing
+    inkscape
+    krita
+    rx
+    mypaint
+
   ];
   xsession ={
     enable = true;
