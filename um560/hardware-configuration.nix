@@ -12,23 +12,19 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  # switch to latest kernel for wifi card
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  
+
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/3430d06a-bd42-47cc-9a4b-64564c8d2642";
+    { device = "/dev/disk/by-uuid/dc8a5139-4ae2-448a-a0ef-6da744046fd2";
       fsType = "ext4";
     };
 
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/702ece33-7855-4753-9635-61571bcc8ed3";
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5148-2F63";
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/F4C8-A5AC";
       fsType = "vfat";
     };
-
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/ad4e5a18-deec-478a-94bd-6228bf14f5d6"; }
+    [ { device = "/dev/disk/by-uuid/e455b9fa-0720-4e67-b38f-8e1ab4e2f7ab"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

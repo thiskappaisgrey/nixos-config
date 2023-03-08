@@ -107,6 +107,9 @@
     
     sioyek.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/sioyek/";
     sioyek.target = "/home/thanawat/.config/sioyek";
+    
+    alacritty.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/alacritty/";
+    alacritty.target = "/home/thanawat/.config/alacritty";
   };
 
 }

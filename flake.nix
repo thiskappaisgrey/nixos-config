@@ -11,9 +11,17 @@
     tree-grepper.url = "github:BrianHicks/tree-grepper";
     # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
     emacs-ng.url = "github:emacs-ng/emacs-ng";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+
+      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper, emacs-ng, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper, emacs-ng, lanzaboote, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -71,6 +79,7 @@
           # lib.my.mapModules (a: a) ./system-modules - basically returns all of the absolute nix paths in ./system-modules# then, I can import them using this:
           modules =  (lib.my.mapModules (a: a) ./system-modules) ++ [
             ./um560/configuration.nix
+            lanzaboote.nixosModules.lanzaboote
             # enable stuff here! 
            ({pkgs, ...}:
               
@@ -79,7 +88,8 @@
                 ttsystem.mobile-debugging.android-enable = true;
                 ttsystem.xmonad-de = {
                   enable = true;
-                  diskEncryptautoLogin = true;
+                diskEncryptautoLogin = false;
+		  
                 };
                 ttsystem.syncthing.enable = true;
                 ttsystem.gaming.enable = true;
@@ -89,6 +99,24 @@
                 # enable version control
                 ttsystem.version-control.enable = true;
 
+
+                
+                # secure boot
+                boot.bootspec.enable = true;
+                environment.systemPackages = [
+                  # For debugging and troubleshooting Secure Boot.
+                  pkgs.sbctl
+                ];
+                # Lanzaboote currently replaces the systemd-boot module.
+                # This setting is usually set to true in configuration.nix
+                # generated at installation time. So we force it to false
+                # for now.
+                boot.loader.systemd-boot.enable = lib.mkForce false;
+
+                boot.lanzaboote = {
+                  enable = true;
+                  pkiBundle = "/etc/secureboot";
+                };
             })
             
           ];
