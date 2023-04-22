@@ -17,6 +17,7 @@
 
       # Optional but recommended to limit the size of your system closure.
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
     
   };
@@ -87,10 +88,9 @@
                 # Enable system modules
                 ttsystem.mobile-debugging.android-enable = true;
                 ttsystem.xmonad-de = {
-                  enable = true;
-                diskEncryptautoLogin = false;
-		  
+                  enable = false;
                 };
+                
                 ttsystem.syncthing.enable = true;
                 ttsystem.gaming.enable = true;
                 ttsystem.audio.enable = true;
@@ -99,7 +99,9 @@
                 # enable version control
                 ttsystem.version-control.enable = true;
 
-
+                # hyprland
+                programs.hyprland.enable = true;
+                services.xserver.displayManager.sddm.enable = true;
                 
                 # secure boot
                 boot.bootspec.enable = true;
@@ -141,6 +143,7 @@
           ./home/shell
           ./home/haskell.nix
           ./home/de.nix
+          ./home/hyprland.nix
           # ./home/unity.nix
 
           ({
@@ -154,11 +157,13 @@
             home.packages = [
               pkgs.tree-grepper
               # Emacsng flake build fails.. so not using it lol
+              pkgs.wofi
+              pkgs.dolphin
             ];
             # I can change this to emacs-ng instead
             tthome.emacs = {
               enable = true;
-              emacsPkg = pkgs.emacsGit;
+              emacsPkg = pkgs.emacsPgtk;
               # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
               # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
             };
@@ -183,6 +188,7 @@
           ./home/shell
           ./home/haskell.nix
           ./home/de.nix
+          ./home/xmonad.nix
           # ./home/unity.nix
           ({
             home = {

@@ -17,7 +17,7 @@
     element-desktop
     exercism
     feh
-    ffmpeg
+    # ffmpeg
     file
     fontpreview
     fzf
@@ -145,6 +145,8 @@
 
     # airshipper (games)
     airshipper
+
+    sqlite
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
