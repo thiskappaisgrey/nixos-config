@@ -18,7 +18,7 @@
     pcmanfm # file manager
     pkgs.gnome.adwaita-icon-theme
     hicolor-icon-theme
-    nerdfonts
+    # nerdfonts
     # Bar
     taffybar
     haskellPackages.status-notifier-item
@@ -54,7 +54,11 @@
     krita
     rx
     mypaint
+    # tor
+    tor-browser-bundle-bin
+    wezterm   
 
+    texlab
   ];
 
 

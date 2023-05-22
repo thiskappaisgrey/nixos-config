@@ -46,7 +46,7 @@
   # };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
   nix = {
     package = pkgs.nixFlakes;
@@ -124,8 +124,9 @@ experimental-features = nix-command flakes
     # pass
     alacritty
      # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
+    jay
    ];
-
+  security.polkit.enable = true;
   # i will probably migrate to bitwarden.
   programs.gnupg.agent = {
     enable = true;

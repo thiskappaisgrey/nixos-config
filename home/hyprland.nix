@@ -3,12 +3,18 @@
   xsession ={
     enable = false;
   };
-
+  programs.swaylock = {
+    enable = true;
+    # package =  pkgs.swaylock-effects;
+  };
   home.packages = with pkgs; [
     waybar
     eww-wayland
     hyprpaper
     swww
+    # waylock
+    # swaylock-effects
+    
   ];
   home.file = {
     hyprland = {

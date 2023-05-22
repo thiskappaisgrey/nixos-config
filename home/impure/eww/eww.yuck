@@ -16,22 +16,35 @@
             :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
             :onchange "")
     time))
+;; https://github.com/tralph3/.dotfiles/blob/9f8d6e5e7f53d2914808888c574d4b911824160d/.config/eww/bar.yuck
+;; I copied the ws code from here.. Not really sure how it works though .. haha
+
+(deflisten wss :initial "[]" "scripts/get-workspaces")
+(deflisten curr_ws :initial "1" "scripts/get-current-workspace")
 
 (defwidget workspaces []
-  (box :class "workspaces"
-       :orientation "h"
-       :space-evenly true
-       :halign "start"
-       :spacing 10
-    (button :onclick "wmctrl -s 0" 1)
-    (button :onclick "wmctrl -s 1" 2)
-    (button :onclick "wmctrl -s 2" 3)
-    (button :onclick "wmctrl -s 3" 4)
-    (button :onclick "wmctrl -s 4" 5)
-    (button :onclick "wmctrl -s 5" 6)
-    (button :onclick "wmctrl -s 6" 7)
-    (button :onclick "wmctrl -s 7" 8)
-    (button :onclick "wmctrl -s 8" 9)))
+  (eventbox
+   ;; it seems like this line makes the variable change??
+   :onscroll "scripts/change-current-workspace {} ${curr_ws}"
+   :class "workspaces"
+       (box    
+	       :orientation "h"
+	       :space-evenly true
+	       :halign "start"
+	       :spacing 10
+
+	       (for ws in wss
+		    (eventbox 
+		     (box 
+		      :class {ws.id == curr_ws ? "current" : "other" }
+		      (label
+		       :text "${ws.id}"
+		       )))))
+	    ;; (button
+	    ;;  :onclick "hyprctl dispatch workspace ${workspace.id}" "${workspace.id}")
+	    ;; )
+    
+    ))
 
 (defwidget music []
   (box :class "music"

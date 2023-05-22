@@ -10,7 +10,7 @@
     # TODO use local flake to support my own languages instead
     tree-grepper.url = "github:BrianHicks/tree-grepper";
     # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
-    emacs-ng.url = "github:emacs-ng/emacs-ng";
+#   emacs-ng.url = "github:emacs-ng/emacs-ng";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
@@ -22,7 +22,7 @@
     
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper, emacs-ng, lanzaboote, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper,  lanzaboote, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -101,8 +101,10 @@
 
                 # hyprland
                 programs.hyprland.enable = true;
-                services.xserver.displayManager.sddm.enable = true;
-                
+                # services.xserver.displayManager.sddm.enable = true;
+
+                # make swaylock work
+                security.pam.services = { swaylock = { }; };
                 # secure boot
                 boot.bootspec.enable = true;
                 environment.systemPackages = [

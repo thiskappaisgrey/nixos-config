@@ -49,6 +49,16 @@
 .label-ram {
   font-size: large;
 }
-.workspaces button:hover {
-  color: #D35D6E;
+.workspaces {
+    button:hover {
+	color: #D35D6E;
+    }
+    .current {
+	background-color: #4e4e4e;
+	color: #8fbc8f;
+    }
+    .other {
+	background-color: #4e4e4e;
+    }
+
 }
