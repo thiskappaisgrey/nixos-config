@@ -60,6 +60,7 @@ in
             scheme-medium
             # for communitive diagrams
             tikz-cd
+            elsarticle
           ;
           # scheme-full minted fancyhdr;
         })

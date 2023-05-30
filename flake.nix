@@ -99,8 +99,10 @@
                 # enable version control
                 ttsystem.version-control.enable = true;
 
-                # hyprland
+                # wayland compositors
                 programs.hyprland.enable = true;
+                programs.sway.enable = true;
+                
                 # services.xserver.displayManager.sddm.enable = true;
 
                 # make swaylock work

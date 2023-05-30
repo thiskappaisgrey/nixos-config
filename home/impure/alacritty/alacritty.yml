@@ -481,7 +481,7 @@ colors: *nord
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
- program: /home/thanawat/.nix-profile/bin/nu
+ program: /home/thanawat/.nix-profile/bin/fish
 #  args:
 #    - --login
 
