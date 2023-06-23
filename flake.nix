@@ -167,7 +167,7 @@
             # I can change this to emacs-ng instead
             tthome.emacs = {
               enable = true;
-              emacsPkg = pkgs.emacsPgtk;
+              emacsPkg = pkgs.emacs-pgtk;
               # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
               # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
             };

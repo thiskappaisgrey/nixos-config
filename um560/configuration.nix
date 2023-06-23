@@ -125,6 +125,7 @@ experimental-features = nix-command flakes
     alacritty
      # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
     jay
+    vulkan-tools
    ];
   security.polkit.enable = true;
   # i will probably migrate to bitwarden.
@@ -135,6 +136,7 @@ experimental-features = nix-command flakes
 
   services.udisks2.enable = true;
   hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.

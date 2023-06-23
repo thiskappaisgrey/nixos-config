@@ -6,7 +6,8 @@
     #   targets = [ "thumbv7em-none-eabihf" ];
     # })
     # use the nightly compiler
-    (pkgs.rust-bin.selectLatestNightlyWith (toolchain: toolchain.default)) 
+    # (pkgs.rust-bin.selectLatestNightlyWith (toolchain: toolchain.default)) 
+    pkgs.rust-bin.stable.latest.default
 
     # for embedded stuff
     # pkgs.minicom

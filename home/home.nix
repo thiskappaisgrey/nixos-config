@@ -90,7 +90,7 @@
     
     # even though I use pipewire, I use pulseaudio for audio control
     pulsemixer
-    pulseaudio # for pactl 
+    # pulseaudio # for pactl 
     playerctl
 
     
@@ -99,7 +99,13 @@
     simple-scan
 
     # python is needed for stuff
-    python3
+    (python3.withPackages (ps: with ps; [
+        pygments
+        epc
+        orjson
+        sexpdata
+        six
+    ]))
     gcc
 
     # more browsers
@@ -130,12 +136,10 @@
     # other tools
     zip
     unzip
-    libnotify
     gnuplot
 
     # pdf
     sioyek
-    libsForQt5.okular
 
     # common lisp (impure)
     sbcl
@@ -147,6 +151,8 @@
     airshipper
 
     sqlite
+
+    nil
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
@@ -158,6 +164,11 @@
     enableZshIntegration = true;
     # TODO make config for this later
   };
-
+  home.file = {
+    helix = {
+        source =       config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/helix";
+        target = "/home/thanawat/.config/helix";
+    };
+  };
 
 }

@@ -1,0 +1,28 @@
+# At most one section each of 'keys.normal', 'keys.insert' and 'keys.select'
+[keys.normal]
+# C-s = ":w" # Maps Ctrl-s to the typable command :w which is an alias for :write (save file)
+#C-o = ":open ~/.config/helix/config.toml" # Maps Ctrl-o to opening of the helix config file
+# a = "move_char_left" # Maps the 'a' key to the move_char_left command
+# w = "move_line_up" # Maps the 'w' key move_line_up
+# "C-S-esc" = "extend_line" # Maps Ctrl-Shift-Escape to extend_line
+# g = { a = "code_action" } # Maps `ga` to show possible code actions
+# "ret" = ["open_below", "normal_mode"] # Maps the enter key to open_below then re-enter normal mode
+n = "move_line_down"
+i = "move_line_up"
+o = "move_char_left"
+h = "move_char_right"
+s = "insert_mode"
+S = "insert_at_line_start"
+k = "select_regex"
+K = "split_selection"
+"A-k" = "split_selection_on_newline"
+l = "open_below"
+L = "open_above"
+j = "search_next"
+J = "search_prev"
+N = "join_selections"
+H = "hover"
+A-c = "copy_selection_on_prev_line"
+
+[keys.insert]
+

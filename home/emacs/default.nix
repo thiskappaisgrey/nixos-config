@@ -64,8 +64,12 @@ in
           ;
           # scheme-full minted fancyhdr;
         })
-        python38Packages.pygments
+        tikzit
 
+        typst
+        typst-lsp
+        typst-fmt
+        typst-live
       ];
       # home.sessionVariables = {
       # };
