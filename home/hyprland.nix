@@ -8,7 +8,9 @@
     # package =  pkgs.swaylock-effects;
   };
   home.packages = with pkgs; [
-    waybar
+    (waybar.overrideAttrs (oldAttrs: {
+   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    }))
     eww-wayland
     hyprpaper
     swww

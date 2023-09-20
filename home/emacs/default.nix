@@ -13,6 +13,7 @@ in
         defaultText = lib.literalExpression "pkgs.emacs";
         description = "The Emacs package to install.";
       };
+      
     };
   };
   # make this into a config b/c emacs is pretty heavy
@@ -31,6 +32,11 @@ in
           # try the latest unstable emacs..
           cfg.emacsPkg;
         
+        extraPackages = (
+          epkgs : (with epkgs; [
+            treesit-grammars.with-all-grammars 
+          ])
+        );
         # (pkgs.emacsGit.override { nativeComp = true; }); # For latest emacs git:    
         # prob wanna try the tree-
         # pkgs.; 
@@ -70,7 +76,11 @@ in
         typst-lsp
         typst-fmt
         typst-live
+
+        
       ];
+
+
       # home.sessionVariables = {
       # };
     };

@@ -17,7 +17,7 @@
 
       # Optional but recommended to limit the size of your system closure.
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
+      # inputs.rust-overlay.follows = "rust-overlay";
     };
     
   };
@@ -89,6 +89,7 @@
                 ttsystem.mobile-debugging.android-enable = true;
                 ttsystem.xmonad-de = {
                   enable = false;
+                  diskEncryptautoLogin = false;
                 };
                 
                 ttsystem.syncthing.enable = true;
@@ -148,6 +149,7 @@
           ./home/haskell.nix
           ./home/de.nix
           ./home/hyprland.nix
+          ./home/vscode.nix
           # ./home/unity.nix
 
           ({
@@ -167,7 +169,9 @@
             # I can change this to emacs-ng instead
             tthome.emacs = {
               enable = true;
-              emacsPkg = pkgs.emacs-pgtk;
+              emacsPkg = (pkgs.emacs-pgtk.override {
+                withTreeSitter = true;
+              });
               # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
               # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
             };

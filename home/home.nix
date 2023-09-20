@@ -152,7 +152,13 @@
 
     sqlite
 
+    # nix lsp
     nil
+    # nickel lsp
+    nls
+
+
+    zoxide
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

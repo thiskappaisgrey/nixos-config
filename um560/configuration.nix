@@ -92,17 +92,25 @@ experimental-features = nix-command flakes
                      "plugdev"
                      "dialout"
                    ]; # Enable ‘sudo’ for the user.
-     packages = with pkgs; [
-     ];
    };
-  services.udev.extraRules = lib.mkMerge [
+  services.udev = {
+    packages = [
+      pkgs.picoprobe-udev-rules
+    ];
+    extraRules = lib.mkMerge [
     ''
       SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", TAG+="uaccess"''
     # adafruit tft.. hopefully this works?
     ''
     SUBSYSTEMS=="usb|tty|hidraw", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="810f", MODE="664", GROUP="plugdev" ''
-
+    # ST Link
+    # ''ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE:="0666"''
+    # Pi pico
+    # ''SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE:="666"''
+    # ''SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0005", SYMLINK+="pico"''
   ];
+
+  };
   nix.settings.trusted-public-keys = [
     # "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" # reflex-frp
     "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
@@ -149,6 +157,11 @@ experimental-features = nix-command flakes
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+
+  # Link the path I guess?
+  system.extraSystemBuilderCmds = ''
+      ln -sv ${pkgs.path} $out/nixpkgs
+    '';
 
  
 }

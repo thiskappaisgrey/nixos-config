@@ -20,11 +20,13 @@ with lib;
     ];
     # enable openssh
     services.openssh = {
-      enable = true;
       # disable after setup
-      passwordAuthentication = false;
       # don't permit rootlogin. Only using this for version control only
-      permitRootLogin = "no";
+      enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
     };
     # pretty sure I just need a vc user with version control access
     users.users.vc = {

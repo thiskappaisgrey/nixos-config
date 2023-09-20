@@ -59,6 +59,10 @@
     wezterm   
 
     texlab
+
+    dra-cla
+
+    minecraft
   ];
 
 

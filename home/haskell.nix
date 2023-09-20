@@ -8,5 +8,6 @@
     # ghcid
     cabal-install
     stack
+    # haskellPackages.haskell-language-server
   ];
 }
