@@ -19,10 +19,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
       # inputs.rust-overlay.follows = "rust-overlay";
     };
+    eww = {
+      url = "github:ralismark/eww/tray-3";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
     
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper,  lanzaboote, ... }:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay, tree-grepper,  lanzaboote, eww, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -103,7 +108,7 @@
                 # wayland compositors
                 programs.hyprland.enable = true;
                 programs.sway.enable = true;
-                
+                documentation.dev.enable = true;
                 # services.xserver.displayManager.sddm.enable = true;
 
                 # make swaylock work
@@ -140,7 +145,7 @@
         pkgs = pkgs;
         modules = [
           ({
-            nixpkgs.overlays = [ (import self.inputs.emacs-overlay)  rust-overlay.overlays.default ];
+            nixpkgs.overlays = [ (import self.inputs.emacs-overlay)  rust-overlay.overlays.default eww.overlays.default ];
           })
           # TODO move imports over to here.. and rewrite to use cfg instead.
           ./home/home.nix

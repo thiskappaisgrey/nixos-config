@@ -157,8 +157,7 @@
     # nickel lsp
     nls
 
-
-    zoxide
+    julia
   ];
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

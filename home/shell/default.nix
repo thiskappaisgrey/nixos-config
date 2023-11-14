@@ -11,7 +11,8 @@ alias vim="nvim"
 alias ls="lsd"
 set -a NIX_PATH $HOME/.nix-defexpr/channels
 ## Set environment
-set TERM "xterm-256color"             
+set TERM "xterm-256color"
+export JANET_TREE=$HOME/.local/jpm_tree
 #set EDITOR "micro"
 export DOCKER_HOST="unix:///run/user/1000/docker.sock"
 # fenv "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" # uncomment later when installing fish
@@ -21,7 +22,17 @@ fish_add_path -g ~/dotfiles/scripts
 fish_add_path -g ~/.cargo/bin
 fish_add_path -g ~/.local/bin/
 '';
-  programs.nushell.enable = true ;
+  programs.nushell = {
+    enable = true;
+    configFile.text = ''
+    $env.config.show_banner = false
+    '';
+    };
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+    enableNushellIntegration = true;
+  };
   
 
 }

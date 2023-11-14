@@ -2,20 +2,21 @@
   (centerbox :orientation "h"
     (workspaces)
     (music)
-    (sidestuff)))
+    (sidestuff)
+    ))
 
 (defwidget sidestuff []
   (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+    
     (metric :label "🔊"
             :value volume
-            :onchange "amixer -D pulse sset Master {}%")
-    (metric :label ""
-            :value {EWW_RAM.used_mem_perc}
-            :onchange "")
+	    :onchange "")
     (metric :label "💾"
             :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
             :onchange "")
-    time))
+    time
+    (systray :pack-direction "rtl")
+    ))
 ;; https://github.com/tralph3/.dotfiles/blob/9f8d6e5e7f53d2914808888c574d4b911824160d/.config/eww/bar.yuck
 ;; I copied the ws code from here.. Not really sure how it works though .. haha
 
@@ -34,17 +35,12 @@
 	       :spacing 10
 
 	       (for ws in wss
-		    (eventbox 
-		     (box 
-		      :class {ws.id == curr_ws ? "current" : "other" }
-		      (label
-		       :text "${ws.id}"
-		       )))))
-	    ;; (button
-	    ;;  :onclick "hyprctl dispatch workspace ${workspace.id}" "${workspace.id}")
-	    ;; )
-    
-    ))
+		    (box 
+		     :class {ws.id == curr_ws ? "current" : "other" }
+		     (button
+		      :onclick "hyprctl dispatch workspace ${ws.id}" "${ws.id}"
+		      )))    
+    )))
 
 (defwidget music []
   (box :class "music"
@@ -71,18 +67,18 @@
   "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
 
 (defpoll volume :interval "1s"
-  "scripts/getvol")
+  "pulsemixer --get-volume | awk '{print $1}'")
 
 (defpoll time :interval "10s"
-  "date '+%H:%M %b %d, %Y'")
+  "date '+%I:%M %p %b %d, %Y'")
 
 (defwindow bar
   :monitor 0
   :windowtype "dock"
   :geometry (geometry :x "0%"
                       :y "0%"
-                      :width "90%"
-                      :height "10px"
+                      :width "95%"
+                      :height "3%"
                       :anchor "top center")
-  :reserve (struts :side "top" :distance "4%")
+  :exclusive true
   (bar))

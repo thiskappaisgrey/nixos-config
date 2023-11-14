@@ -14,6 +14,8 @@
     eww-wayland
     hyprpaper
     swww
+    socat
+    wev
     # waylock
     # swaylock-effects
     

@@ -163,6 +163,8 @@ experimental-features = nix-command flakes
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
 
- 
+
+  # FIXME: Container stuff - remove later
+  
 }
 

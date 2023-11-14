@@ -53,7 +53,7 @@
     inkscape
     krita
     rx
-    mypaint
+    rnote
     # tor
     tor-browser-bundle-bin
     wezterm   
@@ -63,6 +63,19 @@
     dra-cla
 
     minecraft
+
+    janet
+    jpm
+    lua
+    lua-language-server
+
+    openscad
+
+    nix-init
+    neovide
+
+    nodePackages.pyright
+    pdfpc
   ];
 
 

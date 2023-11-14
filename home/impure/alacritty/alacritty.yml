@@ -482,6 +482,7 @@ colors: *nord
 #   - (Windows) powershell
 shell:
  program: /home/thanawat/.nix-profile/bin/fish
+ # program: /home/thanawat/.nix-profile/bin/nu
 #  args:
 #    - --login
 
