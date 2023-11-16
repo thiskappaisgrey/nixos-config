@@ -21,6 +21,18 @@
     fadeDelta = 5;
     backend = "glx";
   };
-  home.packages = with pkgs; [ taffybar haskellPackages.status-notifier-item ];
+  home.packages = with pkgs; [
+    taffybar
+    haskellPackages.status-notifier-item
+
+    xclip
+    xorg.xmodmap
+
+    xorg.xwininfo
+
+    rofi
+    rofi-pass
+    rofimoji
+  ];
 
 }

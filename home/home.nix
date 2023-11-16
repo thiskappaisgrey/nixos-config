@@ -32,7 +32,6 @@ in {
 
       lsd # next gen ls command
       mp3info
-      # obs-studio
       pandoc
 
       poppler_utils # for pdf stuff
@@ -46,55 +45,32 @@ in {
       tldr
       tmux
       usbutils
-      xclip
-      xorg.xmodmap
       # xournalpp
-      xorg.xwininfo
 
       # youtube stuff
       youtube-dl
       ytfzf
       ytmdl
 
-      
       zathura
 
       # citation management / pdf-reader
       zotero
 
-
       # Music stuff
       guitarix
       lingot # tuner
 
-      # Audio stuff
-      # ardour
-      # qjackctl
-      # hydrogen
-      # x42-avldrums
-      # rubberband
-      # tenacity
-
-      # hello
       hledger
       hledger-ui
 
       tlwg # thai font
 
-      # freetube
-
-      #TODO: Move this
-      nixfmt
       ripgrep
       fd
       graphviz
 
-
       tldr
-
-      # video editing
-      shotcut
-      screenkey
 
       # even though I use pipewire, I use pulseaudio for audio control
       pulsemixer

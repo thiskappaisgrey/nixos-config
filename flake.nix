@@ -58,7 +58,7 @@
       nixosConfigurations = {
         thinkpad-t480 = lib.nixosSystem {
           inherit system;
-          modules = (lib.my.mapModules (a: a) ./system-modules) ++ [
+          modules = (lib.my.getModules ./system-modules) ++ [
             ./thinkpad-t480/configuration.nix
             nixos-hardware.nixosModules.lenovo-thinkpad-t480
             ({ pkgs, ... }: {
@@ -86,7 +86,7 @@
 
           # figured it out..
           # lib.my.mapModules (a: a) ./system-modules - basically returns all of the absolute nix paths in ./system-modules# then, I can import them using this:
-          modules = (lib.my.mapModules (a: a) ./system-modules) ++ [
+          modules = (lib.my.getModules ./system-modules) ++ [
             ./um560/configuration.nix
             lanzaboote.nixosModules.lanzaboote
             # enable stuff here! 
@@ -146,6 +146,10 @@
           #
           pkgs = pkgs;
           modules = [
+            ./home/apps/drawing.nix
+            ./home/apps/video-editing.nix
+            ./home/apps/audio.nix
+          ] ++ [
             ({
               nixpkgs.overlays = [
                 (import self.inputs.emacs-overlay)
@@ -172,12 +176,7 @@
                 stateVersion = "22.05";
               };
               # use tree-grepper 
-              home.packages = [
-                pkgs.tree-grepper
-                # Emacsng flake build fails.. so not using it lol
-                pkgs.wofi
-                pkgs.dolphin
-              ];
+              home.packages = [ pkgs.tree-grepper ];
               # I can change this to emacs-ng instead
               tthome.emacs = {
                 enable = true;
@@ -187,7 +186,12 @@
                 # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
               };
               tthome.dev-tools.enable = true;
-	      tthome.home.enable = true;
+              tthome.home.enable = true;
+
+              # tthome.de.audio.enable = true;
+              # tthome.de.video-editing.enable = true;
+              tthome.de.drawing.enable = true;
+
             })
             # rust
             ./home/rust.nix
@@ -200,6 +204,10 @@
           #
           pkgs = pkgs;
           modules = [
+            ./home/apps/drawing.nix
+            ./home/apps/video-editing.nix
+            ./home/apps/audio.nix
+          ] ++ [
             ({
               nixpkgs.overlays = [
                 (import self.inputs.emacs-overlay)
@@ -231,7 +239,7 @@
                 emacsPkg = pkgs.emacs;
               };
               tthome.dev-tools.enable = true;
-	      tthome.home.enable = true;
+              tthome.home.enable = true;
             })
             # rust
             ./home/rust.nix

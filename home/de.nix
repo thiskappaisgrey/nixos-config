@@ -32,26 +32,16 @@
     # for arbtt tools
     # haskellPackages.arbtt
 
-    rofi
-    rofi-pass
-    rofimoji
     brightnessctl
 
     # video
     mpv
     yt-dlp
 
-    # drawing
-    # inkscape
-    # krita
-    # rx
-    # rnote
-
     # tor
     tor-browser-bundle-bin
 
     wezterm
-
     texlab
 
     # download dramas
