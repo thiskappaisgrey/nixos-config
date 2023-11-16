@@ -42,10 +42,10 @@
     yt-dlp
 
     # drawing
-    inkscape
-    krita
-    rx
-    rnote
+    # inkscape
+    # krita
+    # rx
+    # rnote
 
     # tor
     tor-browser-bundle-bin

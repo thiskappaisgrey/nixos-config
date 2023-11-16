@@ -26,13 +26,13 @@ in {
       gimp
       gnumake
       imagemagick
-      languagetool
+      # languagetool
       libqalculate
-      libreoffice
+      # libreoffice
 
       lsd # next gen ls command
       mp3info
-      obs-studio
+      # obs-studio
       pandoc
 
       poppler_utils # for pdf stuff
@@ -40,58 +40,64 @@ in {
       # rlwrap # for wrapping sqlite..
 
       signal-desktop
+      # image viewer
       sxiv
+
       tldr
       tmux
       usbutils
       xclip
       xorg.xmodmap
-      xournalpp
+      # xournalpp
       xorg.xwininfo
+
+      # youtube stuff
       youtube-dl
       ytfzf
       ytmdl
+
+      
       zathura
 
       # citation management / pdf-reader
       zotero
-      papis
 
-      # scrot # screenshots
-      # slop # better screen selectoin
-      # niv
 
       # Music stuff
       guitarix
       lingot # tuner
 
       # Audio stuff
-      ardour
-      qjackctl
-      hydrogen
-      x42-avldrums
-      rubberband
-      tenacity
+      # ardour
+      # qjackctl
+      # hydrogen
+      # x42-avldrums
+      # rubberband
+      # tenacity
 
       # hello
       hledger
       hledger-ui
 
-      tlwg
+      tlwg # thai font
 
-      freetube
-      anki
+      # freetube
+
+      #TODO: Move this
       nixfmt
       ripgrep
       fd
       graphviz
+
+
       tldr
+
+      # video editing
       shotcut
       screenkey
 
       # even though I use pipewire, I use pulseaudio for audio control
       pulsemixer
-      # pulseaudio # for pactl 
       playerctl
 
       blanket # whitenoise
