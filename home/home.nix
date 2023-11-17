@@ -8,7 +8,7 @@ in {
     # Let Home Manager install and manage itself.
     programs.home-manager.enable = true;
 
-    fonts.fontconfig.enable = true;
+    # fonts.fontconfig.enable = true;
     # I don't really want to manage xmonad with home-manager
     # Having to switch home-configs everytime I want to configure xmonad (and experimenting with stuff) is really annoyoing
 
@@ -115,10 +115,12 @@ in {
       ldtk
 
       sqlite
+      nerdfonts
 
     ];
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
+    fonts.fontconfig.enable = true;
     # optional for nix flakes support in home-manager 21.11, not required in home-manager unstable or 22.05
 
     programs.starship = {
