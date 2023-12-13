@@ -14,6 +14,7 @@ in {
     home.packages = with pkgs; [
 
       (python3.withPackages (ps: with ps; [ pygments epc orjson sexpdata six ]))
+      python3Packages.pip
 
       gcc
 
@@ -21,7 +22,7 @@ in {
 
       # janet and other stuff
       nil
-      julia
+      # julia
 
       janet
       jpm
@@ -37,7 +38,31 @@ in {
       nix-init
 
       nixfmt
+      gitui
+      lazygit
+      ast-grep
+
+      bat
+      httpie
+      xh
+      curlie
+
+      julia
+      codebraid
+
+      # llama-cpp
+      ollama
+      clang-tools
+
+      # ocaml-ng.ocamlPackages_5_0.ocaml
+      # dune_3
     ];
+
+    home.file = {
+      zellij.source = config.lib.file.mkOutOfStoreSymlink
+        "/home/thanawat/.dotfiles/home/impure/zellij/";
+      zellij.target = "/home/thanawat/.config/zellij";
+    };
 
   };
 

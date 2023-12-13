@@ -91,7 +91,7 @@ in {
 
       powertop
 
-      termonad
+      # termonad
       # prorietary stuff 
       slack
       spotify
@@ -123,11 +123,6 @@ in {
     fonts.fontconfig.enable = true;
     # optional for nix flakes support in home-manager 21.11, not required in home-manager unstable or 22.05
 
-    programs.starship = {
-      enable = true;
-      enableZshIntegration = true;
-      # TODO make config for this later
-    };
     home.file = {
       helix = {
         source = config.lib.file.mkOutOfStoreSymlink

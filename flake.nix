@@ -99,7 +99,9 @@
                   enable = false;
                   diskEncryptautoLogin = false;
                 };
+                # programs.nix-ld.enable = true;
 
+                ttsystem.nix-ld.enable = true;
                 ttsystem.syncthing.enable = true;
                 ttsystem.gaming.enable = true;
                 ttsystem.audio.enable = true;
@@ -132,6 +134,7 @@
                   enable = true;
                   pkiBundle = "/etc/secureboot";
                 };
+
               })
 
           ];

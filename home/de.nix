@@ -50,7 +50,14 @@
     openscad
 
     pdfpc
+    wlsunset
   ];
+
+  # services.wlsunset = {
+  #   enable = true;
+  #   latitude = "34";
+  #   longitude = "119";
+  # };
 
   # TODO define different autorandr profiles for my different systems.. just 
   # services.xembed-sni-proxy.enable = true;
