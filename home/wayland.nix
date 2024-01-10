@@ -10,15 +10,24 @@
     }))
     eww-wayland
     hyprpaper
+
     swww
+    satty
+
     socat
     wev
     wofi
+    ironbar
+    yambar
     # waylock
+    kile-wl
+    river-luatile
+
     # swaylock-effects
 
   ];
   # copied from:  https://github.com/fufexan/dotfiles
+  # FIXME: This isn't working .... I'll have to disable it for now..
   services.swayidle = let
     suspendScript = pkgs.writeShellScript "suspend-script" ''
       ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
@@ -59,7 +68,13 @@
       target = "/home/thanawat/.config/sway";
 
     };
+    river = {
+      source = config.lib.file.mkOutOfStoreSymlink
+        "/home/thanawat/.dotfiles/home/impure/river";
+      target = "/home/thanawat/.config/river";
 
+    };
+    #
     eww = {
       source = config.lib.file.mkOutOfStoreSymlink
         "/home/thanawat/.dotfiles/home/impure/eww";

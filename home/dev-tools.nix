@@ -52,10 +52,12 @@ in {
 
       # llama-cpp
       ollama
-      clang-tools
 
       # ocaml-ng.ocamlPackages_5_0.ocaml
       # dune_3
+      koka
+
+      foot
     ];
 
     home.file = {

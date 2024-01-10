@@ -8,7 +8,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.url = "github:oxalica/rust-overlay";
     # TODO use local flake to support my own languages instead
-    tree-grepper.url = "github:BrianHicks/tree-grepper";
     # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
     #   emacs-ng.url = "github:emacs-ng/emacs-ng";
 
@@ -19,16 +18,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
       # inputs.rust-overlay.follows = "rust-overlay";
     };
+
+    # Eww with the fork .. not sure if I'll keep using eww though..?
     eww = {
       url = "github:ralismark/eww/tray-3";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
 
+    anyrun.url = "github:Kirottu/anyrun";
+    anyrun.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay
-    , tree-grepper, lanzaboote, eww, ... }:
+    , lanzaboote, eww, anyrun, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -37,7 +41,6 @@
         # Interesting, this is how you consume a "eachDefaultSystem" flake. you have to specify the system in the overlay / package.
         # TODO tree grepper defines it's own tree-sitter binaries, I wonder if I can just use those rather than some other one?
         overlays = [
-          tree-grepper.overlay.x86_64-linux
           (import self.inputs.emacs-overlay)
           # emacs-ng.overlays.default
         ];
@@ -113,6 +116,7 @@
                 # wayland compositors
                 programs.hyprland.enable = true;
                 programs.sway.enable = true;
+                programs.river.enable = true;
                 documentation.dev.enable = true;
                 # services.xserver.displayManager.sddm.enable = true;
 
@@ -123,6 +127,8 @@
                 environment.systemPackages = [
                   # For debugging and troubleshooting Secure Boot.
                   pkgs.sbctl
+
+                  pkgs.hikari
                 ];
                 # Lanzaboote currently replaces the systemd-boot module.
                 # This setting is usually set to true in configuration.nix
@@ -166,7 +172,7 @@
             ./home/shell
             ./home/haskell.nix
             ./home/de.nix
-            ./home/hyprland.nix
+            ./home/wayland.nix
             ./home/vscode.nix
             ./home/dev-tools.nix
             # ./home/unity.nix
@@ -178,8 +184,8 @@
                 homeDirectory = "/home/${username}";
                 stateVersion = "22.05";
               };
-              # use tree-grepper 
-              home.packages = [ pkgs.tree-grepper ];
+              home.packages =
+                [ anyrun.packages.${system}.anyrun-with-all-plugins ];
               # I can change this to emacs-ng instead
               tthome.emacs = {
                 enable = true;
@@ -232,11 +238,7 @@
                 homeDirectory = "/home/${username}";
                 stateVersion = "22.05";
               };
-              # use tree-grepper 
-              home.packages = [
-                pkgs.tree-grepper
-                # Emacsng flake build fails.. so not using it lol
-              ];
+              home.packages = [ ];
               tthome.emacs = {
                 enable = true;
                 emacsPkg = pkgs.emacs;
