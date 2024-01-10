@@ -12,6 +12,9 @@ in {
       x42-avldrums
       rubberband
       tenacity
+
+      guitarix
+      lingot # tuner
     ];
   };
 }

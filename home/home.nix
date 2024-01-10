@@ -16,7 +16,6 @@ in {
     # these get merged somehow..
     home.packages = with pkgs; [
       cachix
-      cmus
       element-desktop # matrix client
       exercism
       feh
@@ -28,18 +27,12 @@ in {
       imagemagick
       # languagetool
       libqalculate
-      # libreoffice
 
-      lsd # next gen ls command
-      mp3info
+      lsd
       pandoc
-
       poppler_utils # for pdf stuff
 
-      # rlwrap # for wrapping sqlite..
-
       signal-desktop
-      # image viewer
       sxiv
 
       tldr
@@ -47,19 +40,9 @@ in {
       usbutils
       # xournalpp
 
-      # youtube stuff
-      youtube-dl
-      ytfzf
-      ytmdl
-
       zathura
-
       # citation management / pdf-reader
       zotero
-
-      # Music stuff
-      guitarix
-      lingot # tuner
 
       hledger
       hledger-ui
@@ -85,9 +68,6 @@ in {
       nyxt
 
       itd # pinetime app
-      # rust editors
-      # this doesn't really fit with my style tbh.. I like helix more
-      lapce
 
       powertop
 
@@ -110,9 +90,6 @@ in {
 
       # pdf
       sioyek
-
-      # ldtk
-      ldtk
 
       sqlite
       nerdfonts

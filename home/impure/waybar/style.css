@@ -1,0 +1,97 @@
+/* TODO: define some colors */
+@define-color highlightbg #5e81ac;
+
+* {
+	font-size: 12px;
+	font-family: monospace, "Terminess Nerd Font Mono";
+}
+
+window#waybar {
+	background: #292b2e;
+	color: #fdf6e3;
+}
+
+
+#workspaces button {
+	padding: 0 2px;
+	color: #fdf6e3;
+}
+#workspaces button.focused {
+	color: #268bd2;
+}
+#workspaces button:hover {
+	box-shadow: inherit;
+	text-shadow: inherit;
+}
+#workspaces button:hover {
+	background: #1a1a1a;
+	border: #1a1a1a;
+	padding: 0 3px;
+}
+
+#tags button {
+	padding: 0 2px;
+	color: #fdf6e3;
+}
+#tags button.focused {
+	color: #ebcb8b;
+	background-color: #5e81ac;
+        border-bottom: 3px solid #ffffff;
+}
+#tags button:hover {
+	box-shadow: inherit;
+	text-shadow: inherit;
+}
+#tags button:hover {
+	background: #1a1a1a;
+	border: #1a1a1a;
+	padding: 0 3px;
+}
+#custom-round-right,
+#custom-round-left {
+	font-size: 20pt;
+	color: #5e81ac;
+	/* background: @sound; */
+}
+
+#pulseaudio {
+    background-color: #5e81ac;
+    color: #e5e9f0;
+}
+#pulseaudio-slider {
+    min-height: 0px;
+    min-width: 100px;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    background-color: #5e81ac;
+}
+#pulseaudio-slider slider {
+    min-height: 10px;
+    min-width: 10px;
+    background-color: #5e81ac;
+}
+#pulseaudio-slider trough {
+    min-height: 0px;
+    min-width: 10px;
+    border-radius: 5px;
+    background-color: #434c5e;
+}
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-color: #88c0d0;
+}
+
+
+#clock,
+#memory,
+#cpu,
+#battery,
+#tray,
+#disk {
+	padding: 0 10px;
+        background-color: @highlightbg;
+        color: #e5e9f0;
+}
+

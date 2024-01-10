@@ -7,6 +7,8 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
     # TODO use local flake to support my own languages instead
     # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
     #   emacs-ng.url = "github:emacs-ng/emacs-ng";
@@ -32,7 +34,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay
-    , lanzaboote, eww, anyrun, ... }:
+    , lanzaboote, eww, anyrun, disko, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -55,11 +57,13 @@
         };
       });
       username = "thanawat";
+
+      home-modules = import ./home/modules-list.nix;
     in {
       lib = lib;
       # nixosModules =   {ttsystem = {}; } // lib.my.mapModules import ./system-modules;
       nixosConfigurations = {
-        thinkpad-t480 = lib.nixosSystem {
+        "thanawat-thinkpad" = lib.nixosSystem {
           inherit system;
           modules = (lib.my.getModules ./system-modules) ++ [
             ./thinkpad-t480/configuration.nix
@@ -83,7 +87,7 @@
 
         };
         # my um560 configuration
-        um560 = lib.nixosSystem {
+        "thanawat-um560" = lib.nixosSystem {
           inherit system;
           inherit lib;
 
@@ -142,8 +146,25 @@
                 };
 
               })
-
           ];
+        };
+
+        # Installation iso 
+        # TODO: copy my dotfiles into the iso
+        exampleIso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+            ({ pkgs, ... }: {
+              environment.systemPackages = [
+                pkgs.neovim
+                pkgs.git
+                disko.outputs.packages."${system}".default
+              ];
+              environment.etc = { dotfiles.source = ./.; };
+            })
+          ];
+
         };
 
       };
@@ -154,11 +175,9 @@
           # Specify the path to your home configuration here
           #
           pkgs = pkgs;
-          modules = [
-            ./home/apps/drawing.nix
-            ./home/apps/video-editing.nix
-            ./home/apps/audio.nix
-          ] ++ [
+
+          # TODO: I need to rework this...
+          modules = home-modules ++ [
             ({
               nixpkgs.overlays = [
                 (import self.inputs.emacs-overlay)
@@ -166,17 +185,6 @@
                 eww.overlays.default
               ];
             })
-            # TODO move imports over to here.. and rewrite to use cfg instead.
-            ./home/home.nix
-            ./home/emacs/default.nix
-            ./home/shell
-            ./home/haskell.nix
-            ./home/de.nix
-            ./home/wayland.nix
-            ./home/vscode.nix
-            ./home/dev-tools.nix
-            # ./home/unity.nix
-
             ({
               home = {
                 inherit username;
@@ -200,6 +208,7 @@
               # tthome.de.audio.enable = true;
               # tthome.de.video-editing.enable = true;
               tthome.de.drawing.enable = true;
+              tthome.wayland.enable = true;
 
             })
             # rust
@@ -212,11 +221,7 @@
           # Specify the path to your home configuration here
           #
           pkgs = pkgs;
-          modules = [
-            ./home/apps/drawing.nix
-            ./home/apps/video-editing.nix
-            ./home/apps/audio.nix
-          ] ++ [
+          modules = home-manager ++ [
             ({
               nixpkgs.overlays = [
                 (import self.inputs.emacs-overlay)
@@ -224,13 +229,6 @@
               ];
             })
             # TODO move imports over to here.. and rewrite to use cfg instead.
-            ./home/home.nix
-            ./home/emacs/default.nix
-            ./home/shell
-            ./home/haskell.nix
-            ./home/de.nix
-            ./home/xmonad.nix
-            ./home/dev-tools.nix
             ({
               home = {
                 inherit username;
@@ -246,12 +244,11 @@
               tthome.dev-tools.enable = true;
               tthome.home.enable = true;
             })
-            # rust
-            ./home/rust.nix
           ];
 
         };
       };
 
     };
+
 }
