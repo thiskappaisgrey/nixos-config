@@ -99,6 +99,11 @@ in {
           "/home/thanawat/.dotfiles/home/impure/anyrun";
         target = "/home/thanawat/.config/anyrun";
       };
+      foot = {
+        source = config.lib.file.mkOutOfStoreSymlink
+          "/home/thanawat/.dotfiles/home/impure/foot";
+        target = "/home/thanawat/.config/foot";
+      };
 
     };
   };
