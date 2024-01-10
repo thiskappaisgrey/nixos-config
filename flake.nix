@@ -149,6 +149,52 @@
           ];
         };
 
+         "framework-thanawat" = lib.nixosSystem {
+          inherit system;
+          inherit lib;
+
+          # figured it out..
+          # lib.my.mapModules (a: a) ./system-modules - basically returns all of the absolute nix paths in ./system-modules# then, I can import them using this:
+          modules = (lib.my.getModules ./system-modules) ++ [
+            ./framework/configuration.nix
+	    disko.nixosModules.disko
+	    ./disk-config.nix
+            # enable stuff here! 
+            ({ pkgs, ... }:
+
+              {
+                # Enable system modules
+                # ttsystem.mobile-debugging.android-enable = true;
+                ttsystem.xmonad-de = {
+                  enable = false;
+                  diskEncryptautoLogin = false;
+                };
+                # programs.nix-ld.enable = true;
+
+                ttsystem.nix-ld.enable = true;
+                ttsystem.syncthing.enable = true;
+                ttsystem.gaming.enable = true;
+                ttsystem.audio.enable = true;
+                ttsystem.printing.enable = true;
+                ttsystem.zoom.enable = true;
+                # enable version control
+                ttsystem.version-control.enable = true;
+
+                # wayland compositors
+                programs.hyprland.enable = true;
+                programs.sway.enable = true;
+                programs.river.enable = true;
+                documentation.dev.enable = true;
+                # services.xserver.displayManager.sddm.enable = true;
+
+                # make swaylock work
+                security.pam.services = { swaylock = { }; };
+
+
+              })
+          ];
+        };
+
         # Installation iso 
         # TODO: copy my dotfiles into the iso
         exampleIso = nixpkgs.lib.nixosSystem {
@@ -166,8 +212,9 @@
           ];
 
         };
-
+	
       };
+
       # TODO rewrite this into the nixos module instead of an individual module
       # so I don't have to update twice?
       homeConfigurations = {
@@ -216,6 +263,56 @@
           ];
 
         };
+
+	"framework" = home-manager.lib.homeManagerConfiguration {
+          # Specify the path to your home configuration here
+          #
+          pkgs = pkgs;
+
+          # TODO: I need to rework this...
+          modules = home-modules ++ [
+            ({
+              nixpkgs.overlays = [
+                (import self.inputs.emacs-overlay)
+                rust-overlay.overlays.default
+                eww.overlays.default
+              ];
+            })
+            ({
+              home = {
+                inherit username;
+                # username = "thanawat";
+                homeDirectory = "/home/${username}";
+                stateVersion = "22.05";
+              };
+              home.packages =
+                [ anyrun.packages.${system}.anyrun-with-all-plugins ];
+              # I can change this to emacs-ng instead
+              tthome.emacs = {
+                enable = true;
+                emacsPkg = pkgs.emacs29;
+                # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
+                # emacsPkg = emacs-ng.packages.x86_64-linux.emacsng;
+              };
+              tthome.dev-tools.enable = true;
+              tthome.home.enable = true;
+
+              # tthome.de.audio.enable = true;
+              # tthome.de.video-editing.enable = true;
+              tthome.de.drawing.enable = false;
+	      manual.html.enable = false;
+	      manual.manpages.enable = false;
+	      manual.json.enable = false;
+	      tthome.wayland.enable = true;
+
+            })
+            # rust
+            ./home/rust.nix
+          ];
+
+        };
+
+
 
         laptop = home-manager.lib.homeManagerConfiguration {
           # Specify the path to your home configuration here
