@@ -10,10 +10,9 @@
 # in
 {
   # tt = allFileNames ../modules;
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   services.dbus.packages = with pkgs; [ dconf ];
   # Use the systemd-boot EFI boot loader.
@@ -28,7 +27,8 @@
   networking.hostName = "thanawat-um560"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -48,14 +48,15 @@
   # Enable the X11 windowing system.
   services.xserver.enable = false;
 
+  boot.binfmt.emulatedSystems = [ "riscv64-linux" ];
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
-experimental-features = nix-command flakes
-'';
-    trustedUsers = ["root" "thanawat"];
+      experimental-features = nix-command flakes
+    '';
+    settings.trusted-users = [ "root" "thanawat" ];
   };
-  
 
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -75,49 +76,45 @@ experimental-features = nix-command flakes
   # services.xserver.libinput.enable = true;
 
   # TODO Virtualization (move this to it's own config file)
-  virtualisation.libvirtd.enable = true; 
+  virtualisation.libvirtd.enable = true;
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
   };
 
-  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraGroups.plugdev = { };
   users.users.thanawat = {
-     isNormalUser = true;
-     extraGroups = [ "wheel"
-                     "adbusers"
-                     "input"
-                     "plugdev"
-                     "dialout"
-                   ]; # Enable ‘sudo’ for the user.
-   };
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "adbusers"
+      "input"
+      "plugdev"
+      "dialout"
+    ]; # Enable ‘sudo’ for the user.
+  };
   services.udev = {
-    packages = [
-      pkgs.picoprobe-udev-rules
-    ];
+    packages = [ pkgs.picoprobe-udev-rules ];
     extraRules = lib.mkMerge [
-    ''
-      SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", TAG+="uaccess"''
-    # adafruit tft.. hopefully this works?
-    ''
-    SUBSYSTEMS=="usb|tty|hidraw", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="810f", MODE="664", GROUP="plugdev" ''
-    # ST Link
-    # ''ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE:="0666"''
-    # Pi pico
-    # ''SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE:="666"''
-    # ''SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0005", SYMLINK+="pico"''
-  ];
+      ''
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", TAG+="uaccess"''
+      # adafruit tft.. hopefully this works?
+      ''
+        SUBSYSTEMS=="usb|tty|hidraw", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="810f", MODE="664", GROUP="plugdev" ''
+      # ST Link
+      # ''ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE:="0666"''
+      # Pi pico
+      # ''SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE:="666"''
+      # ''SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0005", SYMLINK+="pico"''
+    ];
 
   };
   nix.settings.trusted-public-keys = [
     # "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" # reflex-frp
     "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
   ];
-  nix.settings.substituters = [
-    "https://cache.iog.io"
-  ];
+  nix.settings.substituters = [ "https://cache.iog.io" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -131,10 +128,10 @@ experimental-features = nix-command flakes
     htop
     # pass
     alacritty
-     # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
+    # (pkgs.tree-sitter.withPlugins (p: builtins.attrValues p))
     jay
     vulkan-tools
-   ];
+  ];
   security.polkit.enable = true;
   # i will probably migrate to bitwarden.
   programs.gnupg.agent = {
@@ -160,11 +157,10 @@ experimental-features = nix-command flakes
 
   # Link the path I guess?
   system.extraSystemBuilderCmds = ''
-      ln -sv ${pkgs.path} $out/nixpkgs
-    '';
-
+    ln -sv ${pkgs.path} $out/nixpkgs
+  '';
 
   # FIXME: Container stuff - remove later
-  
+
 }
 
