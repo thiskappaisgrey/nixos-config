@@ -22,4 +22,5 @@
   ./dev-tools.nix
 
   ./rust.nix
+  ./design.nix
 ]

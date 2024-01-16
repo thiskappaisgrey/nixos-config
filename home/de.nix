@@ -5,10 +5,10 @@
 
   gtk = {
     enable = true;
-    theme = {
-      package = pkgs.graphite-gtk-theme;
-      name = "graphite-gtk-theme";
-    };
+    # theme = {
+    #   package = pkgs.colloid-gtk-theme;
+    #   name = "Colloid";
+    # };
     iconTheme = {
       name = "Qogir";
       package = pkgs.qogir-icon-theme;
@@ -41,8 +41,6 @@
 
     # download dramas
     dra-cla
-
-    openscad
 
     pdfpc
     wlsunset

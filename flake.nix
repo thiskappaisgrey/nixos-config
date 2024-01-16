@@ -149,7 +149,7 @@
           ];
         };
 
-         "framework-thanawat" = lib.nixosSystem {
+        "framework-thanawat" = lib.nixosSystem {
           inherit system;
           inherit lib;
 
@@ -157,8 +157,8 @@
           # lib.my.mapModules (a: a) ./system-modules - basically returns all of the absolute nix paths in ./system-modules# then, I can import them using this:
           modules = (lib.my.getModules ./system-modules) ++ [
             ./framework/configuration.nix
-	    disko.nixosModules.disko
-	    ./disk-config.nix
+            disko.nixosModules.disko
+            ./disk-config.nix
             # enable stuff here! 
             ({ pkgs, ... }:
 
@@ -190,7 +190,6 @@
                 # make swaylock work
                 security.pam.services = { swaylock = { }; };
 
-
               })
           ];
         };
@@ -212,7 +211,7 @@
           ];
 
         };
-	
+
       };
 
       # TODO rewrite this into the nixos module instead of an individual module
@@ -256,6 +255,7 @@
               # tthome.de.video-editing.enable = true;
               tthome.de.drawing.enable = true;
               tthome.wayland.enable = true;
+              tthome.design.enable = true;
 
             })
             # rust
@@ -264,7 +264,7 @@
 
         };
 
-	"framework" = home-manager.lib.homeManagerConfiguration {
+        "framework" = home-manager.lib.homeManagerConfiguration {
           # Specify the path to your home configuration here
           #
           pkgs = pkgs;
@@ -300,10 +300,10 @@
               # tthome.de.audio.enable = true;
               # tthome.de.video-editing.enable = true;
               tthome.de.drawing.enable = false;
-	      manual.html.enable = false;
-	      manual.manpages.enable = false;
-	      manual.json.enable = false;
-	      tthome.wayland.enable = true;
+              manual.html.enable = false;
+              manual.manpages.enable = false;
+              manual.json.enable = false;
+              tthome.wayland.enable = true;
 
             })
             # rust
@@ -311,8 +311,6 @@
           ];
 
         };
-
-
 
         laptop = home-manager.lib.homeManagerConfiguration {
           # Specify the path to your home configuration here
