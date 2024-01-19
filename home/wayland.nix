@@ -33,36 +33,6 @@ in {
       # swaylock-effects
 
     ];
-    # copied from:  https://github.com/fufexan/dotfiles
-    # FIXME: This isn't working .... I'll have to disable it for now..
-    services.swayidle = let
-      suspendScript = pkgs.writeShellScript "suspend-script" ''
-        ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
-        # only suspend if audio isn't running
-        if [ $? == 1 ]; then
-          ${pkgs.systemd}/bin/systemctl suspend
-        fi
-      '';
-    in {
-      enable = true;
-      events = [
-        {
-          event = "before-sleep";
-          command =
-            "${pkgs.swaylock}/bin/swaylock -fF --image /home/thanawat/.dotfiles/pikachu.jpg";
-        }
-        {
-          event = "lock";
-          command =
-            "${pkgs.swaylock}/bin/swaylock -fF --image /home/thanawat/.dotfiles/pikachu.jpg";
-        }
-      ];
-      timeouts = [{
-        timeout = 330;
-        command = suspendScript.outPath;
-      }];
-    };
-
     home.file = {
       hyprland = {
         source = config.lib.file.mkOutOfStoreSymlink

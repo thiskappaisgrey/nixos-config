@@ -47,7 +47,7 @@ in {
       xh
       curlie
 
-      julia
+      julia-bin
       codebraid
 
       # llama-cpp

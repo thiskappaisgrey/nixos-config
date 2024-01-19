@@ -2,10 +2,15 @@
   description = "My nixos configuration and dotfiles";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager/master";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
+
+    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
+
     rust-overlay.url = "github:oxalica/rust-overlay";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -188,8 +193,19 @@
                 # services.xserver.displayManager.sddm.enable = true;
 
                 # make swaylock work
-                security.pam.services = { swaylock = { }; };
+                security.pam.services = {
+                  swaylock = {
+                    text = ''
+                      auth sufficient pam_unix.so try_first_pass likeauth nullok
+                      auth sufficient pam_fprintd.so
+                      auth include login
+                    '';
+                  };
+                };
 
+                # TODO: fprintd..?
+                services.fprintd.enable = true;
+                # enable power-profiles-daemon
               })
           ];
         };

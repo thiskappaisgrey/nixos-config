@@ -1,4 +1,6 @@
 # copied from the btrfs, luks, initial setup
+
+# TODO: use bcachefs instead for the default disk config..
 {
   disko.devices = {
     disk = {

@@ -5,10 +5,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -17,7 +16,8 @@
   networking.hostName = "framework-thanawat"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -35,9 +35,6 @@
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-
-
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -79,13 +76,10 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    settings.substituters = [
-      "https://cache.nixos.org/"
-    ];
+    settings.substituters = [ "https://cache.nixos.org/" ];
     settings.auto-optimise-store = true;
     settings.trusted-users = [ "root" "thanawat" ];
   };
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -101,19 +95,24 @@
     alacritty
     git
     htop
-    
+
     # hardinfo utilities
     hardinfo
     hwinfo
     lshw
 
-    
     # glxinfo
-
 
   ]; # ++ (import ./programs/programming.nix pkgs);
 
   sound.enable = true;
+
+  # power management
+  services.power-profiles-daemon.enable = true;
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = lib.mkDefault "powersave";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

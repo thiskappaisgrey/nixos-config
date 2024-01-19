@@ -145,28 +145,39 @@ do
     riverctl map $mode None XF86AudioNext  spawn 'playerctl next'
 
     # Control screen backlight brightness with light (https://github.com/haikarainen/light)
-    riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 5'
-    riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 5'
+    # riverctl map $mode None XF86MonBrightnessUp   spawn 'light -A 5'
+    # riverctl map $mode None XF86MonBrightnessDown spawn 'light -U 5'
 done
-
+#
 # Set background and border color
 riverctl background-color 0x002b36
 riverctl border-color-focused 0x93a1a1
 riverctl border-color-unfocused 0x586e75
 
 # Set keyboard repeat rate
-riverctl set-repeat 50 300
+# riverctl set-repeat 50 300
 
 # Make all views with an app-id that starts with "float" and title "foo" start floating.
-riverctl rule-add -app-id 'float*' -title 'foo' float
+# riverctl rule-add -app-id 'float*' -title 'foo' float
 
 # Make all views with app-id "bar" and any title use client-side decorations
-riverctl rule-add -app-id "bar" csd
+# riverctl rule-add -app-id "bar" csd
 
 # TODO: Spawn some daemons here
-riverctl spawn waybar
+#
+echo "spawning stuff"
+riverctl spawn "swww-daemon"
+if [[ $(hostname) == "framework-thanawat" ]]; then
+        riverctl spawn "swayidle -w before-sleep \"swaylock --image /home/thanawat/.dotfiles/pikachu.jpg\""
+        riverctl spawn "swww img /home/thanawat/.dotfiles/pikachu.jpg"
+        riverctl spawn "waybar -c .config/waybar/laptop/config"
+else
+        riverctl spawn waybar
+        riverctl spawn "swww img /home/thanawat/exp/Pokemon-Terminal/pokemonterminal/Images/Generation\ I\ -\ Kanto/094.jpg"
+fi
+
 riverctl spawn wlsunset
-riverctl spawn "swww img /home/thanawat/exp/Pokemon-Terminal/pokemonterminal/Images/Generation\ I\ -\ Kanto/094.jpg"
+# TODO: This will be broken on my desktop prob...
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
