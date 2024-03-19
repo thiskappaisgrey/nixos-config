@@ -10,5 +10,7 @@
     stack
     haskellPackages.haskell-language-server
     haskellPackages.fourmolu
+    haskellPackages.cabal-fmt
+
   ];
 }

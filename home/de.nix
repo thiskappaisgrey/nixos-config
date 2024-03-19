@@ -44,6 +44,13 @@
 
     pdfpc
     wlsunset
+    floorp
+    libnotify
+    zulip
+    zulip-term
+
+    kicad-small
+    logseq
   ];
 
   services.wlsunset = {

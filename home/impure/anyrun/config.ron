@@ -43,5 +43,6 @@ Config(
     "libsymbols.so",
     "libshell.so",
     "libtranslate.so",
+    "librink.so"
   ],
 )

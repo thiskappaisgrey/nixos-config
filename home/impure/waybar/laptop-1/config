@@ -1,0 +1,88 @@
+{
+	"layer": "top",
+	"position": "top",
+
+	"modules-left": [
+	    "hyprland/workspaces",
+	],
+	"modules-center": [
+                "custom/round-left",
+		"clock#1",
+		"clock#2",
+		"clock#3",
+                "custom/round-right",
+	],
+	"modules-right": [
+                "custom/round-left",
+                "pulseaudio",
+		"pulseaudio/slider",
+		"memory",
+		"cpu",
+		"battery",
+		"tray",
+	],
+        "pulseaudio/slider": {
+            "min": 0,
+            "max": 100,
+            "orientation": "horizontal"
+        },
+        "custom/round-left": {
+                "format": "",
+                "tooltip": false
+        },
+        "custom/round-right": {
+                "format": "",
+                "tooltip": false
+        },
+
+	"clock#1": {
+		"format": "{:%a}",
+		"tooltip": false
+	},
+	"clock#2": {
+		"format": "󰥔{:%H:%M}",
+		"tooltip": false
+	},
+	"clock#3": {
+		"format": "{:%m-%d}",
+		"tooltip": false
+	},
+
+	"pulseaudio": {
+		"format": "{icon} {volume:2}%",
+		"format-bluetooth": "{icon}  {volume}%",
+		"format-muted": "MUTE",
+		"format-icons": {
+			"headphones": "",
+			"default": [
+				"",
+				""
+			]
+		},
+		"scroll-step": 5,
+		"on-click": "pamixer -t",
+		"on-click-right": "pavucontrol"
+	},
+	"memory": {
+		"interval": 5,
+		"format": "Mem {}%"
+	},
+	"cpu": {
+		"interval": 5,
+		"format": "CPU {usage:2}%"
+	},
+	"tray": {
+		"icon-size": 20
+	},
+	"battery": {
+	    "bat": "BAT1",
+	    "interval": 60,
+	    "states": {
+		"warning": 30,
+		"critical": 15
+	    },
+	    "format": "{capacity}% {icon}",
+	    "format-icons": ["", "", "", "", ""],
+	    "max-length": 25
+	}
+}

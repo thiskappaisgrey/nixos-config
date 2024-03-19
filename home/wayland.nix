@@ -29,6 +29,10 @@ in {
       # waylock
       kile-wl
       river-luatile
+      wlr-randr
+
+      grim
+      slurp
 
       # swaylock-effects
 
@@ -74,7 +78,6 @@ in {
           "/home/thanawat/.dotfiles/home/impure/foot";
         target = "/home/thanawat/.config/foot";
       };
-
 
     };
   };

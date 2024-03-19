@@ -49,6 +49,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  services.xserver.digimend.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.thanawat = {
@@ -70,7 +71,7 @@
     ]; # Enable ‘sudo’ for the user.
     # shell = pkgs.fish;
   };
-
+  # services.greetd.enable = true;
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -102,10 +103,20 @@
     lshw
 
     # glxinfo
+    fwupd
 
   ]; # ++ (import ./programs/programming.nix pkgs);
 
   sound.enable = true;
+  services.fwupd.enable = true;
+  services.fwupd.extraRemotes = [ "lvfs-testing" ];
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
+  # set this to a lower number b/c of memory bound
+  nix.settings.max-jobs = 10;
 
   # power management
   services.power-profiles-daemon.enable = true;

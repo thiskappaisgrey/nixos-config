@@ -58,6 +58,11 @@ in {
       koka
 
       foot
+
+      lapce
+      go
+      gopls
+
     ];
 
     home.file = {

@@ -1,0 +1,242 @@
+[colors.bright]
+black = "0x4C566A"
+blue = "0x81A1C1"
+cyan = "0x8FBCBB"
+green = "0xA3BE8C"
+magenta = "0xB48EAD"
+red = "0xBF616A"
+white = "0xECEFF4"
+yellow = "0xEBCB8B"
+
+[colors.cursor]
+cursor = "0xD8DEE9"
+text = "0x2E3440"
+
+[colors.normal]
+black = "0x3B4252"
+blue = "0x81A1C1"
+cyan = "0x88C0D0"
+green = "0xA3BE8C"
+magenta = "0xB48EAD"
+red = "0xBF616A"
+white = "0xE5E9F0"
+yellow = "0xEBCB8B"
+
+[colors.primary]
+background = "0x2E3440"
+foreground = "0xD8DEE9"
+
+[font]
+size = 10.0
+
+[font.glyph_offset]
+x = -1
+y = -1
+
+[font.normal]
+family = "Hasklug Nerd Font"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "PasteSelection"
+key = "Insert"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Key0"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Equals"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "NumpadAdd"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "NumpadSubtract"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Control"
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[[mouse.bindings]]
+action = "Paste"
+mouse = "Right"
+
+[schemes.base16-default.bright]
+black = "0x585858"
+blue = "0xb8b8b8"
+cyan = "0xa16946"
+green = "0x282828"
+magenta = "0xe8e8e8"
+red = "0xdc9656"
+white = "0xf8f8f8"
+yellow = "0x383838"
+
+[schemes.base16-default.cursor]
+cursor = "0xd8d8d8"
+text = "0x181818"
+
+[schemes.base16-default.normal]
+black = "0x181818"
+blue = "0x7cafc2"
+cyan = "0x86c1b9"
+green = "0xa1b56c"
+magenta = "0xba8baf"
+red = "0xab4642"
+white = "0xd8d8d8"
+yellow = "0xf7ca88"
+
+[schemes.base16-default.primary]
+background = "0x181818"
+foreground = "0xd8d8d8"
+
+[schemes.base16-default-256.bright]
+black = "#585858"
+blue = "#7cafc2"
+cyan = "#86c1b9"
+green = "#a1b56c"
+magenta = "#ba8baf"
+red = "#ab4642"
+white = "#f8f8f8"
+yellow = "#f7ca88"
+
+[schemes.base16-default-256.cursor]
+cursor = "#d8d8d8"
+text = "#d8d8d8"
+
+[schemes.base16-default-256.normal]
+black = "#181818"
+blue = "#7cafc2"
+cyan = "#86c1b9"
+green = "#a1b56c"
+magenta = "#ba8baf"
+red = "#ab4642"
+white = "#d8d8d8"
+yellow = "#f7ca88"
+
+[schemes.base16-default-256.primary]
+background = "#181818"
+foreground = "#d8d8d8"
+
+[schemes.base16-gruvbox-dark-hard.bright]
+black = "0x665c54"
+blue = "0xbdae93"
+cyan = "0xd65d0e"
+green = "0x3c3836"
+magenta = "0xebdbb2"
+red = "0xfe8019"
+white = "0xfbf1c7"
+yellow = "0x504945"
+
+[schemes.base16-gruvbox-dark-hard.cursor]
+cursor = "0xd5c4a1"
+text = "0x1d2021"
+
+[schemes.base16-gruvbox-dark-hard.normal]
+black = "0x1d2021"
+blue = "0x83a598"
+cyan = "0x8ec07c"
+green = "0xb8bb26"
+magenta = "0xd3869b"
+red = "0xfb4934"
+white = "0xd5c4a1"
+yellow = "0xfabd2f"
+
+[schemes.base16-gruvbox-dark-hard.primary]
+background = "0x1d2021"
+foreground = "0xd5c4a1"
+
+[schemes.dracula.bright]
+black = "0x4d4d4d"
+blue = "0xcaa9fa"
+cyan = "0x9aedfe"
+green = "0x5af78e"
+magenta = "0xff92d0"
+red = "0xff6e67"
+white = "0xe6e6e6"
+yellow = "0xf4f99d"
+
+[schemes.dracula.cursor]
+cursor = "0xf8f8f2"
+text = "0x44475a"
+
+[schemes.dracula.dim]
+black = "0x14151b"
+blue = "0x4d5b86"
+cyan = "0x59dffc"
+green = "0x1ef956"
+magenta = "0xff46b0"
+red = "0xff2222"
+white = "0xe6e6d1"
+yellow = "0xebf85b"
+
+[schemes.dracula.normal]
+black = "0x000000"
+blue = "0xbd93f9"
+cyan = "0x8be9fd"
+green = "0x50fa7b"
+magenta = "0xff79c6"
+red = "0xff5555"
+white = "0xbfbfbf"
+yellow = "0xf1fa8c"
+
+[schemes.dracula.primary]
+background = "0x282a36"
+foreground = "0xf8f8f2"
+
+[schemes.nord.bright]
+black = "0x4C566A"
+blue = "0x81A1C1"
+cyan = "0x8FBCBB"
+green = "0xA3BE8C"
+magenta = "0xB48EAD"
+red = "0xBF616A"
+white = "0xECEFF4"
+yellow = "0xEBCB8B"
+
+[schemes.nord.cursor]
+cursor = "0xD8DEE9"
+text = "0x2E3440"
+
+[schemes.nord.normal]
+black = "0x3B4252"
+blue = "0x81A1C1"
+cyan = "0x88C0D0"
+green = "0xA3BE8C"
+magenta = "0xB48EAD"
+red = "0xBF616A"
+white = "0xE5E9F0"
+yellow = "0xEBCB8B"
+
+[schemes.nord.primary]
+background = "0x2E3440"
+foreground = "0xD8DEE9"
+
+[shell]
+program = "/home/thanawat/.nix-profile/bin/fish"
+
+[window]
+opacity = 1.0

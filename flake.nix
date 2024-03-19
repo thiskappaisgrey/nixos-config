@@ -26,20 +26,13 @@
       # inputs.rust-overlay.follows = "rust-overlay";
     };
 
-    # Eww with the fork .. not sure if I'll keep using eww though..?
-    eww = {
-      url = "github:ralismark/eww/tray-3";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-    };
-
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
 
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay
-    , lanzaboote, eww, anyrun, disko, ... }:
+    , lanzaboote, anyrun, disko, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -179,7 +172,9 @@
                 ttsystem.nix-ld.enable = true;
                 ttsystem.syncthing.enable = true;
                 ttsystem.gaming.enable = true;
-                ttsystem.audio.enable = true;
+                ttsystem.audio.enable = false;
+
+                hardware.pulseaudio.enable = false;
                 ttsystem.printing.enable = true;
                 ttsystem.zoom.enable = true;
                 # enable version control
@@ -244,7 +239,6 @@
               nixpkgs.overlays = [
                 (import self.inputs.emacs-overlay)
                 rust-overlay.overlays.default
-                eww.overlays.default
               ];
             })
             ({
@@ -291,7 +285,6 @@
               nixpkgs.overlays = [
                 (import self.inputs.emacs-overlay)
                 rust-overlay.overlays.default
-                eww.overlays.default
               ];
             })
             ({
@@ -315,7 +308,7 @@
 
               # tthome.de.audio.enable = true;
               # tthome.de.video-editing.enable = true;
-              tthome.de.drawing.enable = false;
+              tthome.de.drawing.enable = true;
               manual.html.enable = false;
               manual.manpages.enable = false;
               manual.json.enable = false;

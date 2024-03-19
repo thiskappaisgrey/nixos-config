@@ -23,6 +23,7 @@
     fish_add_path -g ~/dotfiles/scripts
     fish_add_path -g ~/.cargo/bin
     fish_add_path -g ~/.local/bin/
+    source ${pkgs.pass}/share/fish/vendor_completions.d/pass.fish
   '';
   programs.nushell = {
     enable = true;
@@ -70,5 +71,10 @@
   };
   programs.carapace.enable = true;
   programs.carapace.enableNushellIntegration = true;
+
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 
 }
