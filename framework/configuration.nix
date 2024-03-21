@@ -167,10 +167,7 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   security.polkit.enable = true;
   # i will probably migrate to bitwarden.
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "gtk2";
-  };
+  programs.gnupg.agent = { enable = true; };
 
   services.udisks2.enable = true;
   hardware.opengl.enable = true;

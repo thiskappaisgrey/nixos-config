@@ -29,10 +29,15 @@
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, rust-overlay
-    , lanzaboote, anyrun, disko, ... }:
+    , lanzaboote, anyrun, disko, nixos-cosmic, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -157,6 +162,15 @@
             ./framework/configuration.nix
             disko.nixosModules.disko
             ./disk-config.nix
+            {
+              nix.settings = {
+                substituters = [ "https://cosmic.cachix.org/" ];
+                trusted-public-keys = [
+                  "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+                ];
+              };
+            }
+            nixos-cosmic.nixosModules.default
             # enable stuff here! 
             ({ pkgs, ... }:
 
@@ -172,7 +186,12 @@
                 ttsystem.nix-ld.enable = true;
                 ttsystem.syncthing.enable = true;
                 ttsystem.gaming.enable = true;
-                ttsystem.audio.enable = false;
+                ttsystem.audio.enable = true;
+
+                services.desktopManager.cosmic.enable = true;
+                services.displayManager.cosmic-greeter.enable = true;
+                environment.systemPackages = [ pkgs.cosmic-greeter ];
+                security.pam.services.cosmic-greeter = { };
 
                 hardware.pulseaudio.enable = false;
                 ttsystem.printing.enable = true;
