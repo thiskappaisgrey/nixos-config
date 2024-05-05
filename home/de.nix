@@ -51,6 +51,10 @@
 
     kicad-small
     logseq
+
+    zoom-us
+    gocryptfs
+    zenith
   ];
 
   services.wlsunset = {

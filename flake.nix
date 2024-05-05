@@ -7,7 +7,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
     emacs-overlay.url = "github:nix-community/emacs-overlay/master";
 
@@ -160,6 +159,7 @@
           # lib.my.mapModules (a: a) ./system-modules - basically returns all of the absolute nix paths in ./system-modules# then, I can import them using this:
           modules = (lib.my.getModules ./system-modules) ++ [
             ./framework/configuration.nix
+            nixos-hardware.nixosModules.framework-13-7040-amd
             disko.nixosModules.disko
             ./disk-config.nix
             {
@@ -188,10 +188,10 @@
                 ttsystem.gaming.enable = true;
                 ttsystem.audio.enable = true;
 
-                services.desktopManager.cosmic.enable = true;
-                services.displayManager.cosmic-greeter.enable = true;
-                environment.systemPackages = [ pkgs.cosmic-greeter ];
-                security.pam.services.cosmic-greeter = { };
+                # services.desktopManager.cosmic.enable = true;
+                # services.displayManager.cosmic-greeter.enable = true;
+                # environment.systemPackages = [ pkgs.cosmic-greeter ];
+                # security.pam.services.cosmic-greeter = { };
 
                 hardware.pulseaudio.enable = false;
                 ttsystem.printing.enable = true;
@@ -324,13 +324,11 @@
               };
               tthome.dev-tools.enable = true;
               tthome.home.enable = true;
+              tthome.de.audio.enable = true;
 
               # tthome.de.audio.enable = true;
               # tthome.de.video-editing.enable = true;
               tthome.de.drawing.enable = true;
-              manual.html.enable = false;
-              manual.manpages.enable = false;
-              manual.json.enable = false;
               tthome.wayland.enable = true;
 
             })

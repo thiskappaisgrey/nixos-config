@@ -11,6 +11,7 @@ in {
       hydrogen
       x42-avldrums
       rubberband
+      rakarrack
       tenacity
 
       guitarix

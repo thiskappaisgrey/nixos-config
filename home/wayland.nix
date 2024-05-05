@@ -15,7 +15,6 @@ in {
       (waybar.overrideAttrs (oldAttrs: {
         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
       }))
-      eww-wayland
       hyprpaper
 
       swww

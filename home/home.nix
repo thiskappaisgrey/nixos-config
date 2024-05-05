@@ -38,7 +38,7 @@ in {
       tldr
       tmux
       usbutils
-      # xournalpp
+      xournalpp
 
       zathura
       # citation management / pdf-reader
