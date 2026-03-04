@@ -1,8 +1,17 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.tthome.home;
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.tthome.home;
+in
+{
   options = {
-    tthome.home = { enable = lib.mkEnableOption "Enable my home config"; };
+    tthome.home = {
+      enable = lib.mkEnableOption "Enable my home config";
+    };
   };
   config = lib.mkIf cfg.enable {
     # Let Home Manager install and manage itself.
@@ -15,34 +24,29 @@ in {
     # It seems that, if you write another "home.packages" in a module
     # these get merged somehow..
     home.packages = with pkgs; [
-      cachix
-      element-desktop # matrix client
-      exercism
+      # cachix
+      # element-desktop # matrix client
       feh
       file
       fontpreview
       fzf
-      gimp
       gnumake
       imagemagick
       # languagetool
-      libqalculate
 
       lsd
       pandoc
-      poppler_utils # for pdf stuff
+      poppler-utils # for pdf stuff
 
       signal-desktop
-      sxiv
+      # sxiv
 
       tldr
       tmux
-      usbutils
-      xournalpp
-
+      # usbutils
       zathura
       # citation management / pdf-reader
-      zotero
+      # zotero
 
       hledger
       hledger-ui
@@ -59,27 +63,33 @@ in {
       pulsemixer
       playerctl
 
-      blanket # whitenoise
-      fstl
-      simple-scan
+      # blanket # whitenoise
+      # fstl
+      # simple-scan
 
       # more browsers
-      brave
-      nyxt
+      # brave
+      # nyxt
 
-      itd # pinetime app
+      # itd # pinetime app
 
       powertop
 
       # termonad
-      # prorietary stuff 
+      # prorietary stuff
       slack
       spotify
       discord
 
       # spelling - move to emacs later
       # wordnet
-      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      (aspellWithDicts (
+        dicts: with dicts; [
+          en
+          en-computers
+          en-science
+        ]
+      ))
 
       pass
 
@@ -92,8 +102,7 @@ in {
       sioyek
 
       sqlite
-      nerdfonts
-
+      nerd-fonts.hasklug
     ];
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
@@ -102,8 +111,7 @@ in {
 
     home.file = {
       helix = {
-        source = config.lib.file.mkOutOfStoreSymlink
-          "/home/thanawat/.dotfiles/home/impure/helix";
+        source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/helix";
         target = "/home/thanawat/.config/helix";
       };
     };

@@ -187,4 +187,4 @@ plugins {
 }
 default_shell "fish"
 session_serialization true
-
+pane_frames false

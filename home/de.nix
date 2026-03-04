@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 # Desktop environment stuff
 {
   services.dunst.enable = true;
@@ -16,7 +21,6 @@
   };
   home.packages = with pkgs; [
     pcmanfm # file manager
-    pkgs.gnome.adwaita-icon-theme
     hicolor-icon-theme
     # nerdfonts
     # Bar
@@ -31,10 +35,10 @@
 
     # video
     mpv
-    yt-dlp
+    # yt-dlp
 
     # tor
-    tor-browser-bundle-bin
+    # tor-browser-bundle-bin
 
     wezterm
     texlab
@@ -44,17 +48,17 @@
 
     pdfpc
     wlsunset
-    floorp
     libnotify
-    zulip
-    zulip-term
 
-    kicad-small
-    logseq
+    # kicad-small
+    # TODO: remove logseq b/c electron insecure for now..
+    # logseq
 
     zoom-us
     gocryptfs
     zenith
+
+    show-midi
   ];
 
   services.wlsunset = {
@@ -67,12 +71,10 @@
   # change them a lot.. I just want them symlinked without having to
   # have them managed by home-manager
   home.file = {
-    sioyek.source = config.lib.file.mkOutOfStoreSymlink
-      "/home/thanawat/.dotfiles/home/impure/sioyek/";
+    sioyek.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/sioyek/";
     sioyek.target = "/home/thanawat/.config/sioyek";
 
-    alacritty.source = config.lib.file.mkOutOfStoreSymlink
-      "/home/thanawat/.dotfiles/home/impure/alacritty/";
+    alacritty.source = config.lib.file.mkOutOfStoreSymlink "/home/thanawat/.dotfiles/home/impure/alacritty/";
     alacritty.target = "/home/thanawat/.config/alacritty";
   };
 

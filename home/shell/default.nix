@@ -27,8 +27,8 @@
   '';
   programs.nushell = {
     enable = true;
-    package =
-      (pkgs.nushell.override { additionalFeatures = (p: p ++ [ "extra" ]); });
+    package = pkgs.nushell;
+
     configFile.text = ''
       let carapace_completer = {|spans|
       carapace $spans.0 nushell $spans | from json

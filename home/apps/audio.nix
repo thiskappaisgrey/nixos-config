@@ -1,21 +1,30 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.tthome.de.audio;
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.tthome.de.audio;
+in
+{
   options = {
-    tthome.de.audio = { enable = lib.mkEnableOption "Enable audio apps"; };
+    tthome.de.audio = {
+      enable = lib.mkEnableOption "Enable audio apps";
+    };
   };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      ardour
+      # ardour
       qjackctl
       hydrogen
-      x42-avldrums
-      rubberband
-      rakarrack
+      # x42-avldrums
+      # rubberband
+      # rakarrack
       tenacity
 
-      guitarix
-      lingot # tuner
+      # guitarix
+      # lingot # tuner
     ];
   };
 }

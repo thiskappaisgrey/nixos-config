@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ...}:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   cfg = config.ttsystem.mobile-debugging;
 in
@@ -18,12 +23,11 @@ with lib;
       };
     };
   };
-  config =  {
+  config = {
     # you need this for andriod debugging I think
-    services.udev.packages = [ pkgs.android-udev-rules ];
+    # services.udev.packages = [ pkgs.android-udev-rules ];
     # android
-    programs.adb.enable = cfg.android-enable;
     # For iphone
-    services.usbmuxd.enable = cfg.apple-enable;
+    # services.usbmuxd.enable = cfg.apple-enable;
   };
 }

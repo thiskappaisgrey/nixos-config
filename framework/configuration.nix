@@ -2,10 +2,16 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -16,8 +22,7 @@
   networking.hostName = "framework-thanawat"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable =
-    true; # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -49,7 +54,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  services.xserver.digimend.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.thanawat = {
@@ -73,13 +77,15 @@
   };
   # services.greetd.enable = true;
   nix = {
-    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
     settings.substituters = [ "https://cache.nixos.org/" ];
     settings.auto-optimise-store = true;
-    settings.trusted-users = [ "root" "thanawat" ];
+    settings.trusted-users = [
+      "root"
+      "thanawat"
+    ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -88,26 +94,27 @@
     wget
     neovim
     firefox
-    man-pages
-    man-pages-posix
+    # man-pages
+    # man-pages-posix
     # just in case config breaks in xmonad - I can still access terminal emulator
-    xterm
+    # xterm
     # terminal emulator of choice
     alacritty
     git
     htop
+    xdg-desktop-portal-hyprland
 
     # hardinfo utilities
-    hardinfo
-    hwinfo
-    lshw
-
+    # hardinfo
+    # hwinfo
+    # lshw
+    #
     # glxinfo
-    fwupd
+    # fwupd
 
   ]; # ++ (import ./programs/programming.nix pkgs);
+  environment.etc.hosts.mode = "0644";
 
-  sound.enable = true;
   services.fwupd.enable = true;
   services.fwupd.extraRemotes = [ "lvfs-testing" ];
   virtualisation.podman = {
@@ -124,6 +131,8 @@
     enable = true;
     cpuFreqGovernor = lib.mkDefault "powersave";
   };
+
+  # services.logind.lidSwitch = "suspend";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -167,12 +176,13 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   security.polkit.enable = true;
   # i will probably migrate to bitwarden.
-  programs.gnupg.agent = { enable = true; };
+  programs.gnupg.agent = {
+    enable = true;
+  };
 
   services.udisks2.enable = true;
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
+
+  hardware.graphics.enable = true;
   system.stateVersion = "24.05"; # Did you read the comment?
 
 }
-

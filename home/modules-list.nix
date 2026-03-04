@@ -16,7 +16,7 @@
   ./home.nix
   ./emacs/default.nix
   ./shell
-  ./haskell.nix
+  #./haskell.nix
   ./de.nix
   ./xmonad.nix
   ./dev-tools.nix

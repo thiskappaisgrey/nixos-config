@@ -235,8 +235,10 @@ yellow = "0xEBCB8B"
 background = "0x2E3440"
 foreground = "0xD8DEE9"
 
-[shell]
+[terminal.shell]
 program = "/home/thanawat/.nix-profile/bin/fish"
 
 [window]
 opacity = 1.0
+
+[terminal]
