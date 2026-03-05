@@ -59,6 +59,9 @@
     zenith
 
     show-midi
+
+    diskus
+    zk
   ];
 
   services.wlsunset = {
