@@ -46,6 +46,11 @@ in
 
       go
       gopls
+
+      duckdb
+      diceware
+      numbat
+      fuzzel
     ];
 
     home.file = {

@@ -103,6 +103,7 @@ in
 
       sqlite
       nerd-fonts.hasklug
+
     ];
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
