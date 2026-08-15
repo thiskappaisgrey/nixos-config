@@ -62,6 +62,7 @@
 
     diskus
     zk
+    antigravity-fhs
   ];
 
   services.wlsunset = {

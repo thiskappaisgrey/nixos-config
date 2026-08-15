@@ -104,6 +104,8 @@ in
       sqlite
       nerd-fonts.hasklug
 
+      claude-code
+
     ];
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;

@@ -1,10 +1,17 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.ttsystem.gaming;
-in with lib; {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.ttsystem.gaming;
+in
+with lib;
+{
   options = {
     ttsystem.gaming = {
-      enable = mkEnableOption
-        "Steam and gaming - installed system-wide for steam-run.";
+      enable = mkEnableOption "Steam and gaming - installed system-wide for steam-run.";
     };
   };
 
@@ -13,8 +20,8 @@ in with lib; {
       allowUnfree = true;
       packageOverrides = pkgs: {
         steam = pkgs.steam.override {
-          extraPkgs = pkgs:
-            with pkgs; [
+          extraPkgs =
+            pkgs: with pkgs; [
               libxkbcommon
               mesa
               # wayland
@@ -26,20 +33,21 @@ in with lib; {
     };
     nixpkgs.overlays = [
       (self: super: {
-        steam-run = (super.steam.override {
-          extraLibraries = pkgs:
-            with pkgs; [
-              libxkbcommon
-              mesa
-              # wayland
-              zlib
-              libpng
-            ];
-        }).run;
+        steam-run =
+          (super.steam.override {
+            extraLibraries =
+              pkgs: with pkgs; [
+                libxkbcommon
+                mesa
+                # wayland
+                zlib
+                libpng
+              ];
+          }).run;
       })
     ];
 
-    environment.systemPackages = with pkgs; [ steam-run ];
+    environment.systemPackages = with pkgs; [ ];
     programs.steam.enable = true;
 
   };

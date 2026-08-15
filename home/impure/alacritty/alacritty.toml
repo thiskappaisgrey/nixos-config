@@ -27,7 +27,7 @@ background = "0x2E3440"
 foreground = "0xD8DEE9"
 
 [font]
-size = 10.0
+size = 16.0
 
 [font.glyph_offset]
 x = -1

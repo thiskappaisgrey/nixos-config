@@ -10,12 +10,32 @@ in with lib; {
         zlib
         fuse3
         icu
-        zlib
         nss
         openssl.dev
         curl
         expat
         pkg-config
+
+        # Chromium / Playwright
+        glib
+        nspr
+        dbus
+        cups.lib
+        libxcb
+        libxkbcommon
+        alsa-lib
+        mesa
+        xorg.libX11
+        xorg.libXext
+        xorg.libXcomposite
+        xorg.libXdamage
+        xorg.libXfixes
+        xorg.libXrandr
+        cairo
+        pango
+        atk
+        at-spi2-atk
+        at-spi2-core
       ];
     };
   };

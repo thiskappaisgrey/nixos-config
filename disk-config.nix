@@ -1,12 +1,11 @@
 # copied from the btrfs, luks, initial setup
 
-# TODO: use bcachefs instead for the default disk config..
 {
   disko.devices = {
     disk = {
       vdb = {
         type = "disk";
-        # Need to change this 
+        # Need to change this
         device = "/dev/nvme0n1";
         content = {
           type = "gpt";
@@ -42,19 +41,28 @@
                   subvolumes = {
                     "/root" = {
                       mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                     "/home" = {
                       mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                     "/nix" = {
                       mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                     "/swap" = {
                       mountpoint = "/.swapvol";
-                      swap.swapfile.size = "8G";
+                      swap.swapfile.size = "32G";
                     };
                   };
                 };

@@ -53,6 +53,15 @@
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
 
+  services.tailscale = {
+    # Enable tailscale at startup
+    enable = true;
+
+    # If you would like to use a preauthorized key, set
+    # authKeyFile = "/run/secrets/tailscale_key";
+    # Note: maximum expire time is 90 days
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -132,6 +141,11 @@
     enable = true;
     cpuFreqGovernor = lib.mkDefault "powersave";
   };
+
+  # hibernate support (btrfs swapfile on LUKS)
+  boot.resumeDevice = "/dev/mapper/crypted";
+  # Get this value by running: sudo btrfs inspect-internal map-swapfile /.swapvol/swapfile -r
+  boot.kernelParams = [ "resume_offset=25437440" ];
 
   # services.logind.lidSwitch = "suspend";
 

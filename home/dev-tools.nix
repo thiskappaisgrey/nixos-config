@@ -51,6 +51,8 @@ in
       diceware
       numbat
       fuzzel
+      zed-editor
+      typst
     ];
 
     home.file = {

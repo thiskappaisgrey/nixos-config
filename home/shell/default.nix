@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # TODO maybe I don't want to use fish to manage my shell..?
@@ -22,6 +27,9 @@
     # starship init fish | source
     fish_add_path -g ~/dotfiles/scripts
     fish_add_path -g ~/.cargo/bin
+    fish_add_path -g ~/.local/bin/
+    fish_add_path -g ~/go/bin
+    fish_add_path -g ~/.bun/bin/
     fish_add_path -g ~/.local/bin/
     source ${pkgs.pass}/share/fish/vendor_completions.d/pass.fish
   '';

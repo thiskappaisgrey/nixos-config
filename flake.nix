@@ -11,6 +11,9 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    # hermes-agent.url = "github:NousResearch/hermes-agent";
+    # hermes.inputs.nixpkgs.follows = "nixpkgs";
     # TODO use local flake to support my own languages instead
     # TODO Maybe consider adding the taffybar overlay (but prob not necessary)
 
@@ -188,7 +191,7 @@
 
                 ttsystem.nix-ld.enable = true;
                 ttsystem.syncthing.enable = true;
-                ttsystem.gaming.enable = false;
+                ttsystem.gaming.enable = true;
                 ttsystem.audio.enable = true;
 
                 # ttsystem.mobile-debugging.android-enable = true;
@@ -202,6 +205,7 @@
                 # wayland compositors
                 programs.hyprland.enable = true;
                 programs.hyprlock.enable = true;
+                programs.niri.enable = true;
                 documentation.dev.enable = true;
                 # services.xserver.displayManager.sddm.enable = true;
 
@@ -298,7 +302,11 @@
 
           # TODO: I need to rework this...
           modules = home-modules ++ [
-            ({ nixpkgs.overlays = [ rust-overlay.overlays.default ]; })
+            ({
+              nixpkgs.overlays = [
+                rust-overlay.overlays.default
+              ];
+            })
             ({
               home = {
                 inherit username;
